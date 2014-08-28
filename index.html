@@ -1,0 +1,490 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Mike's Blog</title>
+	<meta name="author" content="Mike He">
+
+	
+	<meta name="description" content="According to the official document for Buffer implementation, the Buffer class only supports a few encoding charsets including &#8216;ascii&#8217 &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Mike's Blog" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script async="true" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">Mike's Blog</a></h1>
+<nav id="main-nav"><ul class="main">
+	<li><a href="/">Blog</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main">
+	<li><a href="/">Blog</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="https://www.google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:bestmike007.com">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		
+    
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+    
+	</div>
+	<form class="search" action="https://www.google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:bestmike007.com">
+	</form>
+</nav>
+
+</header>
+	
+		
+	
+	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2013/06/resolve-unknown-encoding-error-for-buffer-in-node-js/">
+		
+			Resolve &#8216;Unknown Encoding&#8217; Error for Buffer in Node.js</a>
+	</h2>
+	<div class="entry-content">
+		<p>According to the official document for Buffer implementation, the Buffer class only supports a few encoding charsets including &#8216;ascii&#8217;, &#8216;utf8&#8242;, &#8216;utf16le&#8217;, &#8216;ucs2&#8242;, &#8216;base64&#8242;, &#8216;binary&#8217;, and &#8216;hex&#8217; [<a title="Node.js Buffer class" href="http://nodejs.org/api/buffer.html#buffer_buffer" target="_blank"><a href="http://nodejs.org/api/buffer.html#buffer_buffer">http://nodejs.org/api/buffer.html#buffer_buffer</a></a>]. So if you&#8217;re calling &#8216;toString&#8217; method from a Buffer instance you should probably get an &#8216;Unknown Encoding&#8217; error , e.g. reading a text file encoded by &#8216;latin1&#8242; or &#8216;ISO-8859-1&#8242;. This post provides a quick fix to this problem.</p>
+
+
+		
+		<a href="/2013/06/resolve-unknown-encoding-error-for-buffer-in-node-js/" class="more-link">Read on &rarr;</a>
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-09T00:00:00+08:00" pubdate data-updated="true"></time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/it/'>it</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2012/09/free-lightweight-groupware-solution-for-small-business/">
+		
+			Free Lightweight Groupware Solution for Small Business</a>
+	</h2>
+	<div class="entry-content">
+		<p>It&#8217;s been a long time since my last blog post. Recently, I&#8217;ve been working on our own company since spring. We are planning to sell novel and creative things targeted United States market on <a title="Find Unique Gifts, Unusual Products and Home Décor at Claybox!" href="http://www.claybox.com/" target="_blank">www.claybox.com</a>. As the director of the IT department of our company, I&#8217;ve been considering how everyone in our company can co-operate. We&#8217;re planning to deploy several common groupware systems, e.g. the bug tracking system, the internal wiki system, etc. And we also need an active directory to provide credentials for these systems.</p>
+
+
+		
+		<a href="/2012/09/free-lightweight-groupware-solution-for-small-business/" class="more-link">Read on &rarr;</a>
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-09-03T00:00:00+08:00" pubdate data-updated="true"></time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/it/'>it</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2011/08/secure-data-transmission-between-pure-php-and-javascript-using-rsa/">
+		
+			Secure Data Transmission Between Pure PHP and JavaScript Using RSA</a>
+	</h2>
+	<div class="entry-content">
+		<p>During the last few days I was looking for an approach to secure data transmission between server written in PHP and browser that runs JavaScript. I failed to find a direct solution, however I made some adaption to some of the existing open source projects and built my own solution to this problem.</p>
+
+
+		
+		<a href="/2011/08/secure-data-transmission-between-pure-php-and-javascript-using-rsa/" class="more-link">Read on &rarr;</a>
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-31T00:00:00+08:00" pubdate data-updated="true"></time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/it/'>it</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2011/07/perplexity-cross-entropy/">
+		
+			Perplexity &#038; Cross-entropy</a>
+	</h2>
+	<div class="entry-content">
+		<p><a href="http://bestmike007.com/2011/07/perplexity-cross-entropy/a/" rel="attachment wp-att-41"><img class="alignnone size-full wp-image-41" title="Relation between Perplexity & Cross-entropy" src="http://bestmike007.com/uploads/2011/07/a.jpg" alt="" width="705" height="561" /></a>PS:</p>
+
+<ol>
+<li><p>Cross-entropy method website: <a href="http://iew3.technion.ac.il/CE/">http://iew3.technion.ac.il/CE/</a></p></li>
+<li><p>Toolkits:</p></li>
+</ol>
+
+
+<p>SRILM: <a href="http://www-speech.sri.com/projects/srilm/">http://www-speech.sri.com/projects/srilm/</a></p>
+
+<p>Another toolkit: <a href="http://mi.eng.cam.ac.uk/~prc14/toolkit.html">http://mi.eng.cam.ac.uk/~prc14/toolkit.html</a></p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-23T00:00:00+08:00" pubdate data-updated="true"></time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/nlp/'>nlp</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2011/07/porter-stemming-algorithm/">
+		
+			Porter Stemming Algorithm</a>
+	</h2>
+	<div class="entry-content">
+		<p>We think of the Porter algorithm as a lexicon-free FST stemmer.</p>
+
+<p>Official website for this algorithm: <a href="http://tartarus.org/~martin/PorterStemmer/index.html">http://tartarus.org/~martin/PorterStemmer/index.html</a></p>
+
+
+		
+		<a href="/2011/07/porter-stemming-algorithm/" class="more-link">Read on &rarr;</a>
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-22T00:00:00+08:00" pubdate data-updated="true"></time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/nlp/'>nlp</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2010/09/oracle-maximum-number-of-expressions-in-a-list-is-1000/">
+		
+			Oracle: Maximum Number of Expressions in a List Is 1000</a>
+	</h2>
+	<div class="entry-content">
+		<p>“I have a comma delimited list of many of IDs that I want to use in an IN clause, Sometimes this list can exceed 1000 items, at which point Oracle throws an error. The query is similar to this&#8230;” – from <a href="http://stackoverflow.com/questions/400255/how-to-put-more-than-1000-values-into-an-oracle-in-clause">http://stackoverflow.com/questions/400255/how-to-put-more-than-1000-values-into-an-oracle-in-clause</a></p>
+
+<p>Recently I’ve encountered the same problem and I’m using Oracle11gR2.</p>
+
+<p>Although it’s not recommended to have more than 1000 items in the IN clause list, we still need something to work around when sometimes it’s needed.</p>
+
+<p>There might be some methods to work around this:</p>
+
+<ol>
+<li><p>Wrap the method which would possibly make a query contains an IN list which exceed 1000 items to divide the large query into subqueries.</p></li>
+<li><p>Using or in the where clause:</p></li>
+</ol>
+
+
+<p>*select * from table1 where ID in (1,2,3,4,&#8230;,1000) or *</p>
+
+<p><em>ID in (1001,1002,&#8230;,2000)</em></p>
+
+<ol>
+<li>Using union all</li>
+</ol>
+
+
+<p><em>select * from table1 where ID in (1,2,3,4,&#8230;,1000)</em></p>
+
+<p><em>union all</em></p>
+
+<p><em>select * from table1 where ID in (1001,1002,&amp;#8230<img src="http://bestmike007.com/wp-content/themes/grey-opaque/images/smilies/icon_wink.gif" title="Smilie: ;)" alt="Smilie: ;)" /></em></p>
+
+<ol>
+<li>Temp table of course, the worst solution I think.</li>
+</ol>
+
+
+<p>This problem does not appear to be in some of the other database systems.</p>
+
+<p>If you’ve got some better solutions, please tell me.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-09-23T00:00:00+08:00" pubdate data-updated="true"></time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/it/'>it</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2010/09/netbeans-unnecessary-deployment-when-tomcat-starts/">
+		
+			NetBeans: Unnecessary Deployment When Tomcat Starts</a>
+	</h2>
+	<div class="entry-content">
+		<p>Something annoying me when using NetBeans 6.9 as my development environment.</p>
+
+<p>This bug has been reported to NetBeans Team. <a href="http://netbeans.org/bugzilla/show_bug.cgi?id=190406">http://netbeans.org/bugzilla/show_bug.cgi?id=190406</a></p>
+
+
+		
+		<a href="/2010/09/netbeans-unnecessary-deployment-when-tomcat-starts/" class="more-link">Read on &rarr;</a>
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-09-23T00:00:00+08:00" pubdate data-updated="true"></time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/it/'>it</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2009/04/do-not-waste-your-time/">
+		
+			Do Not Waste Your Time!!</a>
+	</h2>
+	<div class="entry-content">
+		<div id="msgcns!F08B1508F28DDE0D!143" class="bvMsg">
+  <div>
+    　　If the real work that needs doing is offline, disable the internet for an hour at a time. <br />　　如果这件事情不需要上网就可以完成，把网断掉。 <br />　　 <br />　　Turn email checks into an hourly habit, not an “as the box gets mail” habit. <br />　　延长查看电子邮件的周期。 <br />　　 <br />　　Don’t answer your cell phone when working on something important. Call back later. <br />　　如果手头的工作很重要，工作期间不要接电话，回头再打过去就是了。 <br />　　 <br />　　If you can’t work at work, negotiate finding a new place to get things done. <br />　　如果你的工作环境让你不能工作，换个没人打扰的地方 <br />　　 <br />　　Television means: “I don’t need this time and it doesn’t matter to me.” (Almost always. Really.) <br />　　看电视意味着“这段时间我浪费了也无所谓”。 <br />　　 <br />　　Bugdet your entertainment time vs. production time. Never cheat the other. <br />　　平衡你的娱乐和工作时间。 <br />　　 <br />　　Examine every opportunity along the lines of time vs. projects already underway. <br />　　时时检查你的时间安排和现在已经进行中的项目。 <br />　　 <br />　　Try working part of your day in “off-hour” times, to get more done with fewer people around. <br />　　以小时为单位划分你的工作时间，用更少的人做更多的事情。 <br />　　 <br />　　 <br />　　 <br />　　 <br />　　 <br />　　专心的窍门 <br />　　 <br />　　Write your goals clearly. Post them in eyeball view of where you work most. <br />　　清楚的写下你的目标。放在你的眼皮底下。 <br />　　 <br />　　Spend time with focused people. Meet and befriend those who are where you want to be. <br />　　多和专心工作的人在一起。 <br />　　 <br />　　Consume as much material about your prime focus as you can budget. <br />　　尽量把资源用在主要目标上，把时间花在刀刃上。 <br />　　 <br />　　Analyze your past experiences. Be clear. List your successes. Examine your failures. <br />　　回顾总结以往的成功和失败经验。 <br />　　 <br />　　Stay true to a particular vision of what you want to do. <br />　　清楚明白你想要得到的是什么。 <br />　　 <br />　　Don’t give up too early. <br />　　不要太容易放弃。 <br />　　 <br />　　Envision your success. Write about it. Then read that daily or weekly. <br />　　想象一下成功后的样子，写下来，每天读读。 <br />　　 <br />　　Learn how to “chunk.” Hit each milestone and move to the next. Be methodical. <br />　　学会把大事划分为几个阶段，完成一个阶段，再进入下一个。 <br />　　 <br />　　Develop habits around success and drive. <br />　　养成好习惯。 <br />　　 <br />　　Recharge your batteries with good sleep and food. <br />　　吃好睡足。 <br />　　 <br />　　Develop your relationship with your family. It nourishes the other goals. <br />　　维持家庭关系。这是你完成其它工作的保障。。。
+  </div>
+</div>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-04-18T00:00:00+08:00" pubdate data-updated="true"></time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/it/'>it</a>
+
+
+</div>
+	
+</div>
+</article>
+
+<nav id="pagenavi">
+    
+    
+    <div class="center"><a href="/blog/archives">Blog Archives</a></div>
+</nav></div>
+	<footer id="footer" class="inner">Copyright &copy; 2014
+
+    Mike He
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+
+
+
+
+</body>
+</html>
