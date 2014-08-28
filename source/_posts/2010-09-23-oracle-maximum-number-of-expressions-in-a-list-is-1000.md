@@ -32,12 +32,10 @@ There might be some methods to work around this:
 
 *union all*
 
-*select * from table1 where ID in (1001,1002,&#8230![Smilie: ;)][1]*
+*select * from table1 where ID in (1001,1002,&#8230;,2000)*
 
 4. Temp table of course, the worst solution I think.
 
 This problem does not appear to be in some of the other database systems.
 
 If you’ve got some better solutions, please tell me.
-
- [1]: http://bestmike007.com/wp-content/themes/grey-opaque/images/smilies/icon_wink.gif "Smilie: ;)"
