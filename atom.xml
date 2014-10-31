@@ -4,7 +4,7 @@
   <title><![CDATA[Mike's Blog]]></title>
   <link href="http://bestmike007.com/atom.xml" rel="self"/>
   <link href="http://bestmike007.com/"/>
-  <updated>2014-10-31T14:54:04+08:00</updated>
+  <updated>2014-10-31T17:35:46+08:00</updated>
   <id>http://bestmike007.com/</id>
   <author>
     <name><![CDATA[Mike He]]></name>
@@ -12,6 +12,74 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Applying Patches on Unsupported XenServer 6.2]]></title>
+    <link href="http://bestmike007.com/blog/2014/10/31/applying-patches-on-unsupported-xenserver-6-dot-2/"/>
+    <updated>2014-10-31T15:56:41+08:00</updated>
+    <id>http://bestmike007.com/blog/2014/10/31/applying-patches-on-unsupported-xenserver-6-dot-2</id>
+    <content type="html"><![CDATA[<p>It&rsquo;s easy to patch hostfixes through official XenCenter management software for XenServers with license, while without a license the XenServer have to be patched manually. Official website has an article on <a href="http://support.citrix.com/article/CTX132791L">how to apply a XenServer hotfix manually using the command line</a>. And this process is able to be done automatically with some scripts.</p>
+
+<!--more-->
+
+
+<h2>How to Patch</h2>
+
+<p>Usually we use XenCenter to manage our standalone XenServers and XenServer clusters. XenCenter is checking for updates when connected to a XenServer (or pool master). It will show up like the following image.</p>
+
+<p><img src="http://bestmike007.com/uploads/2014-10-31-applying-patches-on-unsupported-xenserver-6-dot-2/xencenter-update-notification.jpg"></p>
+
+<p>By clicking the &lsquo;Go to the Web Page&hellip;&rsquo; button, the browser will open a web page to a support article introducing the details about the hotfix patch. And we are able to get the download link to the patch package after opening the &lsquo;Download Manager&rsquo; page.</p>
+
+<p><img src="http://bestmike007.com/uploads/2014-10-31-applying-patches-on-unsupported-xenserver-6-dot-2/citrix-download-manager.jpg"></p>
+
+<p>And we&rsquo;ll get a download like this: <code>http://downloadns.citrix.com.edgesuite.net/akdlm/*/XS*.zip</code>. With this link we can patch our XenServers by following the steps described in the <a href="http://support.citrix.com/article/CTX132791L">official article</a>.</p>
+
+<h2>The Script</h2>
+
+<p>We usually open the server (pool master if not standalone installation) console and enter several commands and copy &amp; paste intermediate outputs to apply the patch. So I have simplified the process by the following script.</p>
+
+<pre>
+#!/bin/bash
+# install a update package from citrix
+# e.g. http://downloadns.citrix.com.edgesuite.net/akdlm/*/XS*.zip
+URL=$1
+PKG=`basename $URL`
+cd /tmp
+mkdir update
+cd update
+wget -O $PKG $URL
+unzip $PKG
+for file in $(ls *.xsupdate); do ( xe patch-pool-apply uuid=`xe patch-upload file-name=$file` ) done
+cd /tmp
+rm -rf update
+</pre>
+
+
+<p>We can save this script to <code>/root/patch</code>. And with this script, we simply apply the patch by running a single command.</p>
+
+<pre>bash# ./patch http://downloadns.citrix.com.edgesuite.net/akdlm/*/XS*.zip</pre>
+
+
+<h2>Patch the Server Automatically</h2>
+
+<p>You might be thinking that there have to be some update feed for XenCenter to check for updates, with which we are able to patch the server automatically. That&rsquo;s right. I found this tool: <a href="https://github.com/dalgibbard/citrix_xenserver_patcher">citrix_xenserver_patcher</a>. This tool use the <a href="http://updates.xensource.com/XenServer/updates.xml">patch feed</a> to check for updates and patch the server automatically.</p>
+
+<p>And further more, we can also use cron jobs to patch the server silently. However I prefer patching the server with awareness in case of exceptions.</p>
+
+<h2>How to Reboot after Patching XenServer Pool</h2>
+
+<p>If we&rsquo;re patching a standalone XenServer, we need to stop or pause all the running VMs before rebooting the XenServer if reboot is required after the patch; while we&rsquo;re patching a XenServer pool, running VMs can be migrated to perform a sequential reboot without interrupting running services. Toolstacks of different versions might not be able to communicate correctly, for that we can proceed with the following steps:</p>
+
+<ol>
+<li>Restart toolstack on non-pool-master servers</li>
+<li>Restart toolstack on pool master</li>
+<li>Migrate VMs and reboot non-pool-master servers sequentially</li>
+<li>Migrate VMs and reboot the pool master</li>
+</ol>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Resolve &#8216;Unknown Encoding&#8217; Error for Buffer in Node.js]]></title>
