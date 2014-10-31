@@ -12,7 +12,7 @@ tags:
   - lightweight
   - Small Business
 ---
-It&#8217;s been a long time since my last blog post. Recently, I&#8217;ve been working on our own company since spring. We are planning to sell novel and creative things targeted United States market on <a title="Find Unique Gifts, Unusual Products and Home Décor at Claybox!" href="http://www.claybox.com/" target="_blank">www.claybox.com</a>. As the director of the IT department of our company, I&#8217;ve been considering how everyone in our company can co-operate. We&#8217;re planning to deploy several common groupware systems, e.g. the bug tracking system, the internal wiki system, etc. And we also need an active directory to provide credentials for these systems.
+It&#8217;s been a long time since my last blog post. Recently, I&#8217;ve been working on our own company since spring. We are planning to sell novel and creative things targeted United States market. As the director of the IT department of our company, I&#8217;ve been considering how everyone in our company can co-operate. We&#8217;re planning to deploy several common groupware systems, e.g. the bug tracking system, the internal wiki system, etc. And we also need an active directory to provide credentials for these systems.
 
 <!--more-->
 
