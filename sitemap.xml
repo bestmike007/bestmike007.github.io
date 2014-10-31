@@ -1,69 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  
-  
   <url>
     <loc>http://bestmike007.com/2013/06/resolve-unknown-encoding-error-for-buffer-in-node-js/</loc>
     <lastmod>2013-06-09T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
-  
   <url>
     <loc>http://bestmike007.com/2012/09/free-lightweight-groupware-solution-for-small-business/</loc>
     <lastmod>2012-09-03T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
-  
   <url>
     <loc>http://bestmike007.com/2011/08/secure-data-transmission-between-pure-php-and-javascript-using-rsa/</loc>
     <lastmod>2011-08-31T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
-  
   <url>
     <loc>http://bestmike007.com/2011/07/perplexity-cross-entropy/</loc>
     <lastmod>2011-07-23T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
-  
   <url>
     <loc>http://bestmike007.com/2011/07/porter-stemming-algorithm/</loc>
     <lastmod>2011-07-22T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
-  
   <url>
     <loc>http://bestmike007.com/2010/09/oracle-maximum-number-of-expressions-in-a-list-is-1000/</loc>
     <lastmod>2010-09-23T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
-  
-  <url>
-    <loc>http://bestmike007.com/2010/09/netbeans-unnecessary-deployment-when-tomcat-starts/</loc>
-    <lastmod>2010-09-23T00:00:00+08:00</lastmod>
-    <priority>0.8</priority>
-  </url>
-  
   <url>
     <loc>http://bestmike007.com/2009/04/do-not-waste-your-time/</loc>
     <lastmod>2009-04-18T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
-  
-  
-  <url>
-    <loc>http://bestmike007.com/blog/archives/</loc>
-    <lastmod>2014-08-28T16:24:20+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
   <url>
     <loc>http://bestmike007.com/</loc>
-    <lastmod>2014-08-28T16:24:20+08:00</lastmod>
+    <lastmod>2014-10-31T14:54:04+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
-  
-  
+  <url>
+    <loc>http://bestmike007.com/blog/archives/</loc>
+    <lastmod>2014-10-31T14:54:04+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
 </urlset>
