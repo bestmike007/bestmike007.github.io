@@ -3,6 +3,7 @@ title: Do Not Waste Your Time!!
 author: mike
 layout: post
 permalink: /2009/04/do-not-waste-your-time/
+comments: true
 spaces_16ac6ff82fe138d25322d405ef0dddae_permalink:
   - "http://cid-f08b1508f28dde0d.users.api.live.net/Users(-1113773354670760435)/Blogs('F08B1508F28DDE0D!114')/Entries('F08B1508F28DDE0D!143')?authkey=VJmmPc02mX8%24"
 categories:

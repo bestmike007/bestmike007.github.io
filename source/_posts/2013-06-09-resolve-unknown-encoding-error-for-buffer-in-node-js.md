@@ -3,6 +3,7 @@ title: 'Resolve &#8216;Unknown Encoding&#8217; Error for Buffer in Node.js'
 author: mike
 layout: post
 permalink: /2013/06/resolve-unknown-encoding-error-for-buffer-in-node-js/
+comments: true
 categories:
   - IT
 tags:

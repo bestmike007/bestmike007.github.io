@@ -3,6 +3,7 @@ title: Free Lightweight Groupware Solution for Small Business
 author: mike
 layout: post
 permalink: /2012/09/free-lightweight-groupware-solution-for-small-business/
+comments: true
 categories:
   - IT
 tags:

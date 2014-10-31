@@ -3,6 +3,7 @@ title: 'Perplexity &#038; Cross-entropy'
 author: mike
 layout: post
 permalink: /2011/07/perplexity-cross-entropy/
+comments: true
 categories:
   - NLP
 ---

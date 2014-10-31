@@ -3,6 +3,7 @@ title: Porter Stemming Algorithm
 author: mike
 layout: post
 permalink: /2011/07/porter-stemming-algorithm/
+comments: true
 categories:
   - NLP
 ---

@@ -3,6 +3,7 @@ title: Secure Data Transmission between Pure PHP and JavaScript using RSA
 author: mike
 layout: post
 permalink: /2011/08/secure-data-transmission-between-pure-php-and-javascript-using-rsa/
+comments: true
 categories:
   - IT
 tags:

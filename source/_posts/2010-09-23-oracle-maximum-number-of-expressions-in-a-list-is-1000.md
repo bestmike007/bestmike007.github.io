@@ -3,6 +3,7 @@ title: 'Oracle: maximum number of expressions in a list is 1000'
 author: mike
 layout: post
 permalink: /2010/09/oracle-maximum-number-of-expressions-in-a-list-is-1000/
+comments: true
 jabber_published:
   - 1285247988
 categories:
