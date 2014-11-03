@@ -96,7 +96,7 @@ disqus_short_name: bestmike007
 disqus_show_comment_count: false
 
 # Google Analytics
-google_analytics_tracking_id:
+google_analytics_tracking_id: UA-29233497-3
 
 # Facebook Like
 facebook_like: false
