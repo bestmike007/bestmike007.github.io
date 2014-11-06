@@ -1,5 +1,5 @@
 {% if index %}
-	<h2 class="title">
+	<h2 class="title index">
 		{% if post.external-url %}
 		<a href="{{ post.external-url }}">
 		{% else %}
@@ -13,7 +13,7 @@
 		{% if excerpted == 'true' %}<a href="{{ root_url }}{{ post.url }}" class="more-link">{{ site.excerpt_link }}</a>{% endif %}
 	</div>
 {% else %}
-	<h2 class="title">{% if site.titlecase %}{{ page.title | titlecase }}{% else %}{{ page.title }}{% endif %}</h2>
+	<h1 class="title">{% if site.titlecase %}{{ page.title | titlecase }}{% else %}{{ page.title }}{% endif %}</h1>
 	<div class="entry-content">{{ content }}</div>
 {% endif %}
 

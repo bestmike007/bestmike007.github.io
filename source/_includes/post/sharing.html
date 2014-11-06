@@ -1,4 +1,5 @@
 <div class="share">
+{% if false %}
 	<div class="addthis_toolbox addthis_default_style ">
 		{% if site.facebook_like %}
 		<a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
@@ -16,4 +17,15 @@
 	{% if site.addthis_button %}
 	<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid={{ site.addthis_profile_id }}"></script>
 	{% endif %}
+{% endif %}
+	
+    {% if site.twitter_tweet_button %}
+    <a href="https://twitter.com/share" class="twitter-share-button" data-via="bestmike007">Tweet</a>
+    {% endif %}
+    {% if site.google_plus_one %}
+    <div class="g-plusone" data-size="{{ site.google_plus_one_size }}"></div>
+    {% endif %}
+    {% if site.facebook_like %}
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+    {% endif %}
 </div>

@@ -1,5 +1,5 @@
 .post{
-	h2.title, .entry-content{
+	h1.title, h2.title.index, .entry-content{
 		margin-left: 200px;
 		@media screen and (max-width: 800px){
 			margin-left: 0;
