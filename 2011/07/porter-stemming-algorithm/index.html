@@ -52,6 +52,10 @@
 		
 		
 		
+		<a class="twitter" href="http://twitter.com/bestmike007" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/bestmike007" title="GitHub">GitHub</a>
 		
     
 		
@@ -74,7 +78,7 @@
 		
 	
 	<div id="content" class="inner"><article class="post">
-	<h2 class="title">Porter Stemming Algorithm</h2>
+	<h1 class="title">Porter Stemming Algorithm</h1>
 	<div class="entry-content"><p>We think of the Porter algorithm as a lexicon-free FST stemmer.</p>
 
 <p>Official website for this algorithm: <a href="http://tartarus.org/~martin/PorterStemmer/index.html">http://tartarus.org/~martin/PorterStemmer/index.html</a></p>
@@ -84,7 +88,7 @@
 
 
 
-<pre>/*
+<pre><code class="language-java">/*
 
    Porter stemmer in Java. The original paper is in
 
@@ -507,10 +511,8 @@ class Stemmer
          break;
       }
    }
-}</pre>
+}</code></pre>
 
-
-<p>&nbsp;</p>
 </div>
 
 
@@ -540,15 +542,15 @@ class Stemmer
 </article>
 
 	<div class="share">
-	<div class="addthis_toolbox addthis_default_style ">
-		
-		
-		<a class="addthis_button_tweet"></a>
-		
-		
-		
-	</div>
+
 	
+    
+    <a href="https://twitter.com/share" class="twitter-share-button" data-via="bestmike007">Tweet</a>
+    
+    
+    
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+    
 </div>
 
 
@@ -565,6 +567,7 @@ class Stemmer
 
 </footer>
 	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/prism.js"></script>
 <script src="/javascripts/jquery.fancybox.pack.js"></script>
 <script type="text/javascript">
 (function($){
@@ -591,6 +594,17 @@ class Stemmer
 
 
 
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
 	<script type="text/javascript">
 		var _gaq = _gaq || [];
 		_gaq.push(['_setAccount', 'UA-29233497-3']);
@@ -604,6 +618,9 @@ class Stemmer
 	</script>
 
 
+
+
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
 
 </body>
 </html>

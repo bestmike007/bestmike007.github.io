@@ -52,6 +52,10 @@
 		
 		
 		
+		<a class="twitter" href="http://twitter.com/bestmike007" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/bestmike007" title="GitHub">GitHub</a>
 		
     
 		
@@ -74,7 +78,7 @@
 		
 	
 	<div id="content" class="inner"><article class="post">
-	<h2 class="title">Resolve &#8216;Unknown Encoding&#8217; Error for Buffer in Node.js</h2>
+	<h1 class="title">Resolve &#8216;Unknown Encoding&#8217; Error for Buffer in Node.js</h1>
 	<div class="entry-content"><p>According to the official document for Buffer implementation, the Buffer class only supports a few encoding charsets including &#8216;ascii&#8217;, &#8216;utf8&#8242;, &#8216;utf16le&#8217;, &#8216;ucs2&#8242;, &#8216;base64&#8242;, &#8216;binary&#8217;, and &#8216;hex&#8217; [<a title="Node.js Buffer class" href="http://nodejs.org/api/buffer.html#buffer_buffer" target="_blank"><a href="http://nodejs.org/api/buffer.html#buffer_buffer">http://nodejs.org/api/buffer.html#buffer_buffer</a></a>]. So if you&#8217;re calling &#8216;toString&#8217; method from a Buffer instance you should probably get an &#8216;Unknown Encoding&#8217; error , e.g. reading a text file encoded by &#8216;latin1&#8242; or &#8216;ISO-8859-1&#8242;. This post provides a quick fix to this problem.</p>
 
 <!--more-->
@@ -82,16 +86,18 @@
 
 <p>This solution requires iconv. You can install it with npm.</p>
 
-<pre>npm install iconv</pre>
+<pre><code class="language-bash">npm install iconv</code></pre>
 
 
 <p>And then before using Buffer.toString method, override it with the following code.</p>
 
-<pre>var Iconv = require('iconv').Iconv;
+<pre><code class="language-javascript">var Iconv = require('iconv').Iconv;
 
 Buffer.prototype._$_toString = Buffer.prototype.toString;
 Buffer.prototype.toString = function(charset) {
-    if (typeof charset == 'undefined' || charset == 'utf8' || charset == 'utf16le' || charset == 'ascii' || charset == 'ucs2' || charset == 'binary' || charset == 'base64' || charset == 'hex') {
+    if (typeof charset == 'undefined' || charset == 'utf8' || charset == 'utf16le'
+            || charset == 'ascii' || charset == 'ucs2' || charset == 'binary'
+            || charset == 'base64' || charset == 'hex') {
         return this._$_toString.apply(this, arguments);
     }
     var iconv = new Iconv(charset, 'UTF-8');
@@ -99,12 +105,12 @@ Buffer.prototype.toString = function(charset) {
     var args = arguments;
     args[0] = 'utf8';
     return buffer.toString.apply(buffer, args);
-}</pre>
+}</code></pre>
 
 
-<p>And that&#8217;s all.</p>
+<p>And that&rsquo;s all.</p>
 
-<p>P.S. This solution is originated from <a href="http://stackoverflow.com/questions/14551608/cant-find-encodings-for-node-js" target="_blank"><a href="http://stackoverflow.com/questions/14551608/cant-find-encodings-for-node-js">http://stackoverflow.com/questions/14551608/cant-find-encodings-for-node-js</a></a></p>
+<p>P.S. This solution is originated from <a href="http://stackoverflow.com/questions/14551608/cant-find-encodings-for-node-js">http://stackoverflow.com/questions/14551608/cant-find-encodings-for-node-js</a></p>
 </div>
 
 
@@ -134,15 +140,15 @@ Buffer.prototype.toString = function(charset) {
 </article>
 
 	<div class="share">
-	<div class="addthis_toolbox addthis_default_style ">
-		
-		
-		<a class="addthis_button_tweet"></a>
-		
-		
-		
-	</div>
+
 	
+    
+    <a href="https://twitter.com/share" class="twitter-share-button" data-via="bestmike007">Tweet</a>
+    
+    
+    
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+    
 </div>
 
 
@@ -159,6 +165,7 @@ Buffer.prototype.toString = function(charset) {
 
 </footer>
 	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/prism.js"></script>
 <script src="/javascripts/jquery.fancybox.pack.js"></script>
 <script type="text/javascript">
 (function($){
@@ -185,6 +192,17 @@ Buffer.prototype.toString = function(charset) {
 
 
 
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
 	<script type="text/javascript">
 		var _gaq = _gaq || [];
 		_gaq.push(['_setAccount', 'UA-29233497-3']);
@@ -198,6 +216,9 @@ Buffer.prototype.toString = function(charset) {
 	</script>
 
 
+
+
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
 
 </body>
 </html>

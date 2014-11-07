@@ -4,7 +4,7 @@
   <title><![CDATA[Category: nlp | Mike's Blog]]></title>
   <link href="http://bestmike007.com/blog/categories/nlp/atom.xml" rel="self"/>
   <link href="http://bestmike007.com/"/>
-  <updated>2014-11-04T15:04:51+08:00</updated>
+  <updated>2014-11-08T01:33:57+08:00</updated>
   <id>http://bestmike007.com/</id>
   <author>
     <name><![CDATA[Mike He]]></name>
@@ -18,17 +18,19 @@
     <link href="http://bestmike007.com/2011/07/perplexity-cross-entropy/"/>
     <updated>2011-07-23T00:00:00+08:00</updated>
     <id>http://bestmike007.com/2011/07/perplexity-cross-entropy</id>
-    <content type="html"><![CDATA[<p><a href="http://bestmike007.com/2011/07/perplexity-cross-entropy/a/" rel="attachment wp-att-41"><img class="alignnone size-full wp-image-41" title="Relation between Perplexity & Cross-entropy" src="http://bestmike007.com/uploads/2011/07/a.jpg" alt="" width="705" height="561" /></a>PS:</p>
+    <content type="html"><![CDATA[<p><a href="http://bestmike007.com/2011/07/perplexity-cross-entropy/a/" rel="attachment wp-att-41"><img class="alignnone size-full wp-image-41" title="Relation between Perplexity & Cross-entropy" src="http://bestmike007.com/uploads/2011/07/a.jpg" alt="" width="705" height="561" /></a></p>
 
-<ol>
-<li><p>Cross-entropy method website: <a href="http://iew3.technion.ac.il/CE/">http://iew3.technion.ac.il/CE/</a></p></li>
-<li><p>Toolkits:</p></li>
-</ol>
+<h2>Further Reading</h2>
 
+<p><a href="http://iew3.technion.ac.il/CE/">Cross-entropy method website</a></p>
 
-<p>SRILM: <a href="http://www-speech.sri.com/projects/srilm/">http://www-speech.sri.com/projects/srilm/</a></p>
+<p>Toolkits:</p>
 
-<p>Another toolkit: <a href="http://mi.eng.cam.ac.uk/~prc14/toolkit.html">http://mi.eng.cam.ac.uk/~prc14/toolkit.html</a></p>
+<ul>
+<li><a href="http://www-speech.sri.com/projects/srilm/">SRILM</a></li>
+<li><a href="http://mi.eng.cam.ac.uk/~prc14/toolkit.html">http://mi.eng.cam.ac.uk/~prc14/toolkit.html</a></li>
+</ul>
+
 ]]></content>
   </entry>
   
@@ -46,7 +48,7 @@
 
 
 
-<pre>/*
+<pre><code class="language-java">/*
 
    Porter stemmer in Java. The original paper is in
 
@@ -469,10 +471,8 @@ class Stemmer
          break;
       }
    }
-}</pre>
+}</code></pre>
 
-
-<p>&nbsp;</p>
 ]]></content>
   </entry>
   

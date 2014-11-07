@@ -4,7 +4,7 @@
   <title><![CDATA[Mike's Blog]]></title>
   <link href="http://bestmike007.com/atom.xml" rel="self"/>
   <link href="http://bestmike007.com/"/>
-  <updated>2014-11-04T15:04:51+08:00</updated>
+  <updated>2014-11-08T01:33:57+08:00</updated>
   <id>http://bestmike007.com/</id>
   <author>
     <name><![CDATA[Mike He]]></name>
@@ -12,6 +12,418 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[A Note about Private Class Members in CoffeeScript/JavaScript]]></title>
+    <link href="http://bestmike007.com/blog/2014/11/06/a-note-about-private-class-members-in-coffeescript-slash-javascript/"/>
+    <updated>2014-11-06T11:50:59+08:00</updated>
+    <id>http://bestmike007.com/blog/2014/11/06/a-note-about-private-class-members-in-coffeescript-slash-javascript</id>
+    <content type="html"><![CDATA[<p>JavaScript is the programming language of the web. With the growth of the JavaScript engine <a href="https://code.google.com/p/v8/">V8</a> (the google chrome browser JavaScript engine), which enable JavaScript to run faster, JavaScript is increasingly utilized on the server side, e.g. with <a href="http://nodejs.org/">node.js</a>, <a href="http://phantomjs.org/">phantomjs</a>, etc.</p>
+
+<p><a href="http://coffeescript.org/">CoffeeScript</a> is an innovative language that compiles into JavaScript code. With CoffeeScript we can write our program logic much more faster with less and readable code.</p>
+
+<blockquote><p>CoffeeScript is a little language that compiles into JavaScript. Underneath that awkward Java-esque patina, JavaScript has always had a gorgeous heart. CoffeeScript is an attempt to expose the good parts of JavaScript in a simple way.</p></blockquote>
+
+<p>Most mainstream programming languages adopt the Object-oriented Programming (OOP) paradigm, however, JavaScript does not support OOP natively. But we can still implement classes and objects in its own way. In this article we&rsquo;ll discuss about classes, objects and encapsulation in JavaScript/CoffeeScript.</p>
+
+<!--more-->
+
+
+<h2>Classes and Objects in JavaScript/CoffeeScript</h2>
+
+<p>In JavaScript, we use <code>function</code> and <code>prototype</code> to implement classes.</p>
+
+<pre><code class="language-javascript">function Square(side) {
+    this.side = side; // initialize class variable
+}
+Square.prototype.area = function() {
+    return this.side * this.side;
+}
+var a = new Square(2);
+console.log(a.area()); // output: 4
+var b = new Square(3)
+console.log(b.area()); // output: 9
+</code></pre>
+
+
+<p>Usually we wrap the definition of a class or a block of code with function scope <code>(function() { /* class definition */ })()</code> mainly for the following considerations:</p>
+
+<ol>
+<li>Let the browser load the function and execute it as a whole</li>
+<li>Create a new scope to avoid creating/overriding fields in the global object <code>window</code></li>
+</ol>
+
+
+<p>In CoffeeScript, defining a class is much more simpler.</p>
+
+<pre><code class="language-coffeescript">class Square
+    constructor: (side) ->
+        @side = side
+    area: ->
+        @side * @side
+a = new Square(2)
+console.log a.area() # output 4
+b = new Square(3)
+console.log b.area() # output 9
+</code></pre>
+
+
+<p>Which compiles into:</p>
+
+<pre><code class="language-javascript">var Square, a, b;
+Square = (function() {
+  function Square(side) {
+    this.side = side;
+  }
+  Square.prototype.area = function() {
+    return this.side * this.side;
+  };
+  return Square;
+})();
+a = new Square(2);
+console.log(a.area());
+b = new Square(3);
+console.log(b.area());
+</code></pre>
+
+
+<p>We can see that CoffeeScript wrap the definition of a class with function scope automatically. Actually, CoffeeScript uses a function scope to wrap every JavaScript file compiled from CoffeeScript in case of collision.</p>
+
+<p>In classes defined with JavaScript function and prototype, there is no private methods and variables. All class methods and class variables are public.</p>
+
+<h2>Private Field Encapsulation</h2>
+
+<p>The basic thought of implementing private field is to encapsulate variables and methods in anonymous function scope. The following example adds private static variables and methods in a class.</p>
+
+<pre><code class="language-coffeescript"># CoffeeScript
+class Counter
+    # private static variable
+    counter = 0
+    # private static method
+    countInstance = ->
+        counter++
+    # public static method
+    @instanceCount = ->
+        counter
+    constructor: ->
+        countInstance()
+c1 = new Counter()
+c2 = new Counter()
+console.log Counter.instanceCount() # output 2
+</code></pre>
+
+
+<p>Which compiles into:</p>
+
+<pre><code class="language-javascript">var Counter, c1, c2;
+Counter = (function() {
+  var countInstance, counter;
+  counter = 0;
+  countInstance = function() {
+    return counter++;
+  };
+  Counter.instanceCount = function() {
+    return counter;
+  };
+  function Counter() {
+    countInstance();
+  }
+  return Counter;
+})();
+c1 = new Counter();
+c2 = new Counter();
+console.log(Counter.instanceCount());
+</code></pre>
+
+
+<p>The first function scope to create the class Counter is created only once; so that the variables and methods inside has only one instance and they are accessible from all class methods and instance methods. In order to implement private instance fields, we have to create a new function scope every time the class is instantiated. Considering that all private instance fields have to be accessible from all instance methods, public methods must be either inside the same function scope of the private fields or in one of the descendants, which means that we have to define public methods every time a instance is created so that prototype is not suitable for such situation. Here is an example of class definition with public and private fields and static fields.</p>
+
+<pre><code class="language-coffeescript"># CoffeeScript
+class Square
+    # private static variable
+    counter = 0
+    # private static method
+    countInstance = ->
+        counter++; return
+    # public static method
+    @instanceCount = ->
+        counter
+    constructor: (side) ->
+        countInstance()
+        # side is already a private variable, we define a private variable `self` to avoid evil `this`
+        self = this
+        # private method
+        logChange = ->
+            console.log "Side is set to #{side}"
+        # public methods
+        self.setSide = (v) ->
+            side = v
+            logChange()
+        self.area = ->
+            side * side
+s1 = new Square(2)
+console.log s1.area()   # output 4
+s2 = new Square(3)
+console.log s2.area()   # output 9
+s2.setSide 4            # output Side is set to 4
+console.log s2.area()   # output 16
+console.log Square.instanceCount() # output 2
+</code></pre>
+
+
+<p>Which compiles into:</p>
+
+<pre><code class="language-javascript">var Square, s1, s2;
+Square = (function() {
+  var countInstance, counter;
+  counter = 0;
+  countInstance = function() {
+    counter++;
+  };
+  Square.instanceCount = function() {
+    return counter;
+  };
+  function Square(side) {
+    var logChange, self;
+    countInstance();
+    self = this;
+    logChange = function() {
+      return console.log("Side is set to " + side);
+    };
+    self.setSide = function(v) {
+      side = v;
+      return logChange();
+    };
+    self.area = function() {
+      return side * side;
+    };
+  }
+  return Square;
+})();
+s1 = new Square(2);
+console.log(s1.area());
+s2 = new Square(3);
+console.log(s2.area());
+s2.setSide(4);
+console.log(s2.area());
+console.log(Square.instanceCount());
+</code></pre>
+
+
+<p>That&rsquo;s a way to implement class member encapsulation in normal cases (not too many instances and do not need inheritance). What about protected members and class inheritance?</p>
+
+<h2>Class Inheritance and Protected Fields</h2>
+
+<p>Without encapsulated fields, class inheritance is easy to implement with function and prototype. And that&rsquo;s how <a href="http://prototypejs.org/">protoype.js</a> implement class inheritance. For example:</p>
+
+<pre><code class="language-coffeescript"># CoffeeScript run with prototype.js
+Rectangle = Class.create {
+    initialize: (a, b) ->
+        this.a = a
+        this.b = b
+    area: ->
+        this.a * this.b
+}
+r = new Rectangle(2, 3)
+console.log r.area() # output 6
+
+Square = Class.create Rectangle, {
+    initialize: ($super, side) ->
+        $super side, side
+}
+s = new Square(4)
+console.log s.area() # output 16
+</code></pre>
+
+
+<p>Which compiles into:</p>
+
+<pre><code class="language-javascript">var Rectangle, Square, r, s;
+
+Rectangle = Class.create({
+  initialize: function(a, b) {
+    this.a = a;
+    return this.b = b;
+  },
+  area: function() {
+    return this.a * this.b;
+  }
+});
+r = new Rectangle(2, 3);
+console.log(r.area());
+
+Square = Class.create(Rectangle, {
+  initialize: function($super, side) {
+    return $super(side, side);
+  }
+});
+s = new Square(4);
+console.log(s.area());</code></pre>
+
+
+<p>To learn more about the prototype.js implementation, please read <a href="https://github.com/sstephenson/prototype/blob/master/src/prototype/lang/class.js">the source code</a>.</p>
+
+<p>We&rsquo;ve discussed about private members in JavaScript classes above. What about inheritance without prototype and protected fields accessible from sub-classes?</p>
+
+<p>To create a subclass B from class A, we have to create a scope chain like this:</p>
+
+<pre>
+A_private_static_scope <--- A_protected_scope <--- A_private_scope <--- A_public_scope
+                                    ^
+                                    |
+B_private_static_scope <--- B_protected_scope <--- B_private_scope <--- B_public_scope
+</pre>
+
+
+<p>This is theoretically impossible. Reasons:</p>
+
+<ol>
+<li>Scope <code>B_protected_scope</code> cannot be in <code>A_protected_scope</code> AND <code>B_private_static_scope</code></li>
+<li>Even if we do not need static members, B is not defined inside the definition of class A (of course subclass is defined somewhere else), so that <code>B_protected_scope</code> cannot be in <code>A_protected_scope</code></li>
+<li>Methods in <code>B_protected_scope</code> should have access to members in <code>A_public_scope</code> and have no access to members in <code>A_private_scope</code>, which is impossible with scope chain</li>
+</ol>
+
+
+<p>Conclusion is: we cannot implement class inheritance and encapsulation with JavaScript scope chain. However, we can implement our own class helper to implement class inheritance and protected members. I&rsquo;ve created a lightweight Class Helper example to explain the means by which to implement private/protected/public static/instance variables/methods and subclass inheritance.</p>
+
+<pre><code class='language-coffeescript'>(->
+    classChain = []
+
+    getSuperClass = (subClass) ->
+        return null if !subClass
+        for cls in classChain
+            return cls.superClass if cls.cls == subClass
+
+    getInitializer = (_cls) ->
+        return null if !_cls
+        for cls in classChain
+            return cls.initialize if cls.cls == _cls
+        
+    window.createClass = (superClass, classCreator) ->
+        (classCreator = superClass; superClass = null) if arguments.length == 1
+        return null if typeof classCreator != 'function'
+        $parent = superClass
+        $parents = []
+        $parents.push superClass if superClass
+        while getSuperClass($parent)
+            $parent = getSuperClass($parent)
+            $parents.push $parent
+        cls = ->
+            self = this
+            $self = {}
+            classInitializers = []
+            originalInitializers = []
+            for $parent in $parents
+                originalInitializers.unshift getInitializer($parent)
+            originalInitializers.push initialize
+            for _initializer in originalInitializers
+                ((_initializer) ->
+                    classInitializers.push(->
+                        $self.initialize = classInitializers.pop() || (->)
+                        args = [self, $self]
+                        for arg in arguments
+                            args.push arg
+                        _initializer.apply self, args
+                        delete $self.initialize
+                        return if _initializer == initialize
+                        $super = {}
+                        $super.$super = $self.$super if $self.$super
+                        for k, v of $self
+                            $super[k] = v if typeof v == 'function'
+                        $self.$super = $super
+                    )
+                )(_initializer)
+            classInitializers.pop().apply(self, arguments)
+            return
+        initialize = classCreator(cls)
+        classChain.push {
+            cls: cls
+            superClass: superClass
+            initialize: initialize
+        }
+        return cls
+)()</code></pre>
+
+
+<p>With the class creator helper method, we can create our own classes. For example:</p>
+
+<pre><code class='language-coffeescript'>A = createClass((Class)->
+    # private static variable
+    counter = 0
+    # private static method
+    countInstance = ->
+        counter++; return
+    # public static method
+    Class.instanceCount = ->
+        counter
+    # class initiation method, where:
+    # self: the instance object
+    # $self: the context for protected members
+    (self, $self, id) ->
+        $self.initialize() # call super class constructor.
+        countInstance()
+        # private variable: id
+        # private method
+        getClassName = ->
+            "A"
+        # protected variables
+        $self.id = id
+        # protected method
+        $self.present = ->
+            "#{getClassName()} # #{$self.id}"
+        # public methods
+        self.print = ->
+            console.log "<#{$self.present()}>"
+)
+
+B = createClass(A, (Class) ->
+    counter = 0
+    countInstance = ->
+        counter++; return
+    Class.instanceCount = ->
+        counter
+    (self, $self, id) ->
+        $self.initialize(id) # call super class constructor.
+        countInstance()
+        getClassName = ->
+            "B"
+        # override
+        $self.present = ->
+            "#{getClassName()} : #{$self.$super.present()}"
+)
+
+a = new A('001')
+b = new B('002')
+a.print()   # output: "&lt;A # 001&gt;" 
+b.print()   # output: "&lt;B : A # 002&gt;" 
+console.log A.instanceCount() # output: 2
+console.log B.instanceCount() # output: 1
+</code></pre>
+
+
+<p>Protected members in this example are not strictly &lsquo;protected&rsquo;, but are &lsquo;protected abstract&rsquo; and can be override in subclass. That&rsquo;s because protected methods are not implemented with scope chain in this class helper. And there might be better implementation. If you don&rsquo;t understand the example listed above, maybe you should learn more about JavaScript scope chain, prototype and closure.</p>
+
+<p>Fortunately, in most cases we do not need protected members, at least we usually do not need protected methods that cannot be override. So that the class helper like above is sufficient for most use cases. Please note that the class helper above is not well tested for production use.</p>
+
+<h2>Performance Issues</h2>
+
+<p>To encapsulate private members, we create public methods every time a class is initiated, so that all private members are accessible to public methods. That&rsquo;s how we protect the &lsquo;privacy&rsquo;. Price is that it causes performance issues when thousands of instances are being created in our application. In such cases we fall back to the function &amp; prototype scheme which does not implement private members, which however, is able to avoid defining public methods repeatedly.</p>
+
+<p>In fact, &lsquo;privacy&rsquo; is not strictly &lsquo;privacy&rsquo; in JavaScript; with the modern tools such as the development tool in google chrome, we can inspect almost everything at ease. The &lsquo;privacy&rsquo; here actually refers to the scheme to prevent unexpected access to encapsulated variables and methods. With that in mind, a proper naming convention to distinguish private and public members is sufficient, though everything is &lsquo;public&rsquo;.</p>
+
+<p>However, if you&rsquo;re still interested in the class helper in this article, please let me know.</p>
+
+<h2>Further Reading</h2>
+
+<ul>
+<li><a href="http://javascript.crockford.com/private.html">Private Members in JavaScript</a></li>
+<li><a href="http://philipwalton.com/articles/implementing-private-and-protected-members-in-javascript/">Implementing Private and Protected Members in JavaScript</a></li>
+<li><a href="http://robots.thoughtbot.com/module-pattern-in-javascript-and-coffeescript">Module Pattern in JavaScript and CoffeeScript</a></li>
+<li><a href="http://www.yuiblog.com/blog/2007/06/12/module-pattern/">A JavaScript Module Pattern</a></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Applying Patches on Unsupported XenServer 6.2]]></title>
@@ -39,8 +451,7 @@
 
 <p>We usually open the server (pool master if not standalone installation) console and enter several commands and copy &amp; paste intermediate outputs to apply the patch. So I have simplified the process by the following script.</p>
 
-<pre>
-#!/bin/bash
+<pre><code class="language-bash">#!/bin/bash
 # install a update package from citrix
 # e.g. http://downloadns.citrix.com.edgesuite.net/akdlm/*/XS*.zip
 URL=$1
@@ -53,12 +464,12 @@ unzip $PKG
 for file in $(ls *.xsupdate); do ( xe patch-pool-apply uuid=`xe patch-upload file-name=$file` ) done
 cd /tmp
 rm -rf update
-</pre>
+</code></pre>
 
 
 <p>We can save this script to <code>/root/patch</code>. And with this script, we simply apply the patch by running a single command.</p>
 
-<pre>bash# ./patch http://downloadns.citrix.com.edgesuite.net/akdlm/*/XS*.zip</pre>
+<pre><code class="language-bash">./patch http://downloadns.citrix.com.edgesuite.net/akdlm/*/XS*.zip</code></pre>
 
 
 <h2>Patch the Server Automatically</h2>
@@ -93,16 +504,18 @@ rm -rf update
 
 <p>This solution requires iconv. You can install it with npm.</p>
 
-<pre>npm install iconv</pre>
+<pre><code class="language-bash">npm install iconv</code></pre>
 
 
 <p>And then before using Buffer.toString method, override it with the following code.</p>
 
-<pre>var Iconv = require('iconv').Iconv;
+<pre><code class="language-javascript">var Iconv = require('iconv').Iconv;
 
 Buffer.prototype._$_toString = Buffer.prototype.toString;
 Buffer.prototype.toString = function(charset) {
-    if (typeof charset == 'undefined' || charset == 'utf8' || charset == 'utf16le' || charset == 'ascii' || charset == 'ucs2' || charset == 'binary' || charset == 'base64' || charset == 'hex') {
+    if (typeof charset == 'undefined' || charset == 'utf8' || charset == 'utf16le'
+            || charset == 'ascii' || charset == 'ucs2' || charset == 'binary'
+            || charset == 'base64' || charset == 'hex') {
         return this._$_toString.apply(this, arguments);
     }
     var iconv = new Iconv(charset, 'UTF-8');
@@ -110,12 +523,12 @@ Buffer.prototype.toString = function(charset) {
     var args = arguments;
     args[0] = 'utf8';
     return buffer.toString.apply(buffer, args);
-}</pre>
+}</code></pre>
 
 
-<p>And that&#8217;s all.</p>
+<p>And that&rsquo;s all.</p>
 
-<p>P.S. This solution is originated from <a href="http://stackoverflow.com/questions/14551608/cant-find-encodings-for-node-js" target="_blank"><a href="http://stackoverflow.com/questions/14551608/cant-find-encodings-for-node-js">http://stackoverflow.com/questions/14551608/cant-find-encodings-for-node-js</a></a></p>
+<p>P.S. This solution is originated from <a href="http://stackoverflow.com/questions/14551608/cant-find-encodings-for-node-js">http://stackoverflow.com/questions/14551608/cant-find-encodings-for-node-js</a></p>
 ]]></content>
   </entry>
   
@@ -124,7 +537,7 @@ Buffer.prototype.toString = function(charset) {
     <link href="http://bestmike007.com/2012/09/free-lightweight-groupware-solution-for-small-business/"/>
     <updated>2012-09-03T00:00:00+08:00</updated>
     <id>http://bestmike007.com/2012/09/free-lightweight-groupware-solution-for-small-business</id>
-    <content type="html"><![CDATA[<p>It&#8217;s been a long time since my last blog post. Recently, I&#8217;ve been working on our own company since spring. We are planning to sell novel and creative things targeted United States market. As the director of the IT department of our company, I&#8217;ve been considering how everyone in our company can co-operate. We&#8217;re planning to deploy several common groupware systems, e.g. the bug tracking system, the internal wiki system, etc. And we also need an active directory to provide credentials for these systems.</p>
+    <content type="html"><![CDATA[<p>It&rsquo;s been a long time since my last blog post. Recently, I&#8217;ve been working on our own company since spring. We are planning to sell novel and creative things targeted United States market. As the director of the IT department of our company, I&#8217;ve been considering how everyone in our company can co-operate. We&#8217;re planning to deploy several common groupware systems, e.g. the bug tracking system, the internal wiki system, etc. And we also need an active directory to provide credentials for these systems.</p>
 
 <!--more-->
 
@@ -158,7 +571,7 @@ Buffer.prototype.toString = function(charset) {
 
 <p>Secondly, develop the ldap server. Don&#8217;t panic, it&#8217;s really simple with <a title="OpenDJ LDAP SDK" href="http://opendj.forgerock.org/opendj-ldap-sdk/" target="_blank">OpenDJ LDAP SDK</a>. It&#8217;s a simple delegate server which authenticate the users with the Gmail IMAP server. Just create a new Java application with the following code:</p>
 
-<pre>/**
+<pre><code class="language-java">/**
  *
  * @author Mike
  */
@@ -169,7 +582,8 @@ public class Server {
      public static void main(String[] args) throws Exception {
         File csv = new File("address_biz.csv");
         System.out.println(csv.getAbsolutePath());
-         final ServerConnectionFactory&lt;LDAPClientContext, Integer&gt; connectionHandler = Connections.newServerConnectionFactory(new IMAPBackend());
+         final ServerConnectionFactory&lt;LDAPClientContext, Integer&gt; connectionHandler
+            = Connections.newServerConnectionFactory(new IMAPBackend());
          final LDAPListenerOptions options = new LDAPListenerOptions().setBacklog(4096);
          LDAPListener listener = null;
          try {
@@ -186,18 +600,19 @@ public class Server {
              }
          }
      }
-}</pre>
+}</code></pre>
 
 
 <p>IMAPBackend is the LDAP request handler:</p>
 
-<pre>public class IMAPBackend implements RequestHandler&lt;RequestContext&gt; { ... }</pre>
+<pre><code class="language-java">public class IMAPBackend implements RequestHandler&lt;RequestContext&gt; { ... }</code></pre>
 
 
 <p>And we only implement 2 of those methods, the first one is the bind method:</p>
 
-<pre>@Override
-public void handleBind(RequestContext c, int i, BindRequest br, IntermediateResponseHandler irh, ResultHandler rh) {
+<pre><code class="language-java">@Override
+public void handleBind(RequestContext c, int i, BindRequest br,
+        IntermediateResponseHandler irh, ResultHandler rh) {
     GenericBindRequest request = (GenericBindRequest) br;
     String dn = br.getName();
     System.out.println("Binding: " + dn);
@@ -224,13 +639,14 @@ public void handleBind(RequestContext c, int i, BindRequest br, IntermediateResp
         rh.handleResult(Responses.newBindResult(ResultCode.INVALID_CREDENTIALS));
         System.out.println("Bind " + uid + " fail.");
     }
-}</pre>
+}</code></pre>
 
 
 <p>The second one is the search method, in which you need to maintain an address book for your company:</p>
 
-<pre>@Override
-public void handleSearch(RequestContext c, SearchRequest sr, IntermediateResponseHandler irh, SearchResultHandler srh) {
+<pre><code class="language-java">@Override
+public void handleSearch(RequestContext c, SearchRequest sr,
+        IntermediateResponseHandler irh, SearchResultHandler srh) {
     System.out.println("Searching: " + sr.getFilter().toString());
     for (Entry e : load()) {
         if (sr.getFilter().matches(e).toBoolean()) {
@@ -239,12 +655,12 @@ public void handleSearch(RequestContext c, SearchRequest sr, IntermediateRespons
         }
     }
     srh.handleResult(Responses.newResult(ResultCode.SUCCESS));
-}</pre>
+}</code></pre>
 
 
 <p>And you should implement the load function, for example the following code load the address book from a csv file:</p>
 
-<pre>private static List load() {
+<pre><code class="language-java">private static List load() {
     File csv = new File("address.csv");
     if (!csv.exists()) {
         return Collections.emptyList();
@@ -297,7 +713,7 @@ public void handleSearch(RequestContext c, SearchRequest sr, IntermediateRespons
             scanner.close();
         }
     }
-}</pre>
+}</code></pre>
 
 
 <p>And of course, you can implement your own search function with your preferred way to access your company address book. And that&#8217;s all for this ldap server.</p>
@@ -306,7 +722,7 @@ public void handleSearch(RequestContext c, SearchRequest sr, IntermediateRespons
 
 <p>Here is an example for the MantisBT configuration:</p>
 
-<pre>$g_allow_signup = OFF;
+<pre><code class="language-php">$g_allow_signup = OFF;
 $g_login_method = LDAP;
 $g_ldap_server = 'ldap.example.com';
 $g_ldap_root_dn = 'dc=gmail,dc=com';
@@ -315,12 +731,12 @@ $g_ldap_bind_dn = 'uid=ldap.example.com,dc=gmail,dc=com';
 $g_ldap_bind_passwd = 'internal_s3cret';
 $g_use_ldap_email = ON;
 $g_ldap_realname = 'cn';
-$g_use_ldap_realname = ON;</pre>
+$g_use_ldap_realname = ON;</code></pre>
 
 
 <p>And the example configuration for media wiki:</p>
 
-<pre>$wgGroupPermissions['*']['createaccount'] = false;
+<pre><code class="language-php">$wgGroupPermissions['*']['createaccount'] = false;
 $wgGroupPermissions['*']['edit'] = false;
 $wgGroupPermissions['*']['read'] = false;
 $wgGroupPermissions['*']['createpage'] = false;
@@ -338,7 +754,7 @@ $wgLDAPServerNames = array("example.com" =&gt; "ldap.example.com");
 $wgLDAPSearchAttributes = array('example.com' =&gt; "uid");
 $wgLDAPEncryptionType = array("example.com" =&gt; "clear");
 $wgLDAPProxyAgent = array("example.com" =&gt; "uid=ldap.example.com,dc=gmail,dc=com");
-$wgLDAPProxyAgentPassword = array("example.com" =&gt; "internal_s3cret");</pre>
+$wgLDAPProxyAgentPassword = array("example.com" =&gt; "internal_s3cret");</code></pre>
 
 
 <h2> Conclusion</h2>
@@ -359,29 +775,9 @@ $wgLDAPProxyAgentPassword = array("example.com" =&gt; "internal_s3cret");</pre>
 
 <h2>The Existing Projects</h2>
 
-<p>At the very beginning I found this: <a href="http://www.ohdave.com/rsa/">http://www.ohdave.com/rsa/</a></p>
+<p>At the very beginning I found this: <a href="http://www.ohdave.com/rsa/">http://www.ohdave.com/rsa/</a> It&rsquo;s quite good solution for JavaScript and I searched for the correlated PHP solution and I found this easily: <a href="http://www.sematopia.com/2008/10/rsa-encrypting-in-javascript-and-decrypting-in-php/">http://www.sematopia.com/2008/10/rsa-encrypting-in-javascript-and-decrypting-in-php/</a>. However, it uses the <a href="http://pear.php.net/package/Crypt_RSA/">Crypt_RSA package</a> with several dependencies and in some circumstances those packages would not be available. So I started to search for some pure PHP solution.</p>
 
-<p>&nbsp;</p>
-
-<p>It&#8217;s quite good solution for JavaScript and I searched for the correlated PHP solution and I found this easily: <a href="http://www.sematopia.com/2008/10/rsa-encrypting-in-javascript-and-decrypting-in-php/">http://www.sematopia.com/2008/10/rsa-encrypting-in-javascript-and-decrypting-in-php/</a></p>
-
-<p>However, it uses the <a href="http://pear.php.net/package/Crypt_RSA/">Crypt_RSA package</a> with several dependencies and in some circumstances those packages would not be available. So I started to search for some pure PHP solution.</p>
-
-<p>Then I found this one: <a href="http://code.google.com/p/bi2php/">http://code.google.com/p/bi2php/</a></p>
-
-<p>I tried but failed to run this on my development computer with wamp running on Windows 2008r2.</p>
-
-<p>And this one: <a href="http://stevish.com/rsa-encryption-in-pure-php">http://stevish.com/rsa-encryption-in-pure-php</a></p>
-
-<p>I don&#8217;t know because I hadn&#8217;t tried to make it work because I failed to find a correlated JavaScript implementation.</p>
-
-<p>And I found this from stanford: <a href="http://www-cs-students.stanford.edu/~tjw/jsbn/">http://www-cs-students.stanford.edu/~tjw/jsbn/</a></p>
-
-<p>This is quite good except for the &#8220;message too long&#8221; limitation.</p>
-
-<p>And <a href="https://ziyan.info/exibits/javascript-rsa/login.html">https://ziyan.info/exibits/javascript-rsa/login.html</a> is almost based on that.</p>
-
-<p>At last I noticed <a href="http://phpseclib.sourceforge.net/">http://phpseclib.sourceforge.net/</a>. I&#8217;m quite sure it&#8217;s what I&#8217;m looking for and I tried to adapt it to the projects listed above but they all failed.</p>
+<p>Then I found this one: <a href="http://code.google.com/p/bi2php/">http://code.google.com/p/bi2php/</a>. I tried but failed to run this on my development computer with wamp running on Windows 2008r2. And this one: <a href="http://stevish.com/rsa-encryption-in-pure-php">http://stevish.com/rsa-encryption-in-pure-php</a>. I don&rsquo;t know because I hadn&rsquo;t tried to make it work because I failed to find a correlated JavaScript implementation. And I found this from stanford: <a href="http://www-cs-students.stanford.edu/~tjw/jsbn/">http://www-cs-students.stanford.edu/~tjw/jsbn/</a>. This is quite good except for the &lsquo;message too long&rsquo; limitation. And <a href="https://ziyan.info/exibits/javascript-rsa/login.html">https://ziyan.info/exibits/javascript-rsa/login.html</a> is almost based on that. At last I noticed <a href="http://phpseclib.sourceforge.net/">http://phpseclib.sourceforge.net/</a>. I&rsquo;m quite sure it&rsquo;s what I&rsquo;m looking for and I tried to adapt it to the projects listed above but they all failed.</p>
 
 <p>Then I tried to make some adaption for some of the JavaScript implementation and finally I built an adapted version of jsbn that works with phpseclib.</p>
 
@@ -389,12 +785,9 @@ $wgLDAPProxyAgentPassword = array("example.com" =&gt; "internal_s3cret");</pre>
 
 <p>This solution makes phpseclib works with RSA and ECC in JavaScript from <a href="http://www-cs-students.stanford.edu/~tjw/jsbn/">http://www-cs-students.stanford.edu/~tjw/jsbn/</a> with some modification.</p>
 
-<ol>
-<li>Edit the rsa.js, add a function after the RSAEncrypt function:</li>
-</ol>
+<h3>1. Edit the rsa.js, add a function after the RSAEncrypt function:</h3>
 
-
-<pre>function RSAEncryptLong(text) {
+<pre><code class="language-javascript">function RSAEncryptLong(text) {
   var length = ((this.n.bitLength()+7)&gt;&gt;3) - 11;
   if (length &lt;= 0) return false;
   var ret = "";
@@ -405,40 +798,31 @@ $wgLDAPProxyAgentPassword = array("example.com" =&gt; "internal_s3cret");</pre>
   }
   ret += this._short_encrypt(text.substring(i,text.length));
   return ret;
-}</pre>
+}</code></pre>
 
 
-<ol>
-<li>modify the last line from</li>
-</ol>
+<h3>2. modify the last line from</h3>
 
-
-<pre>RSAKey.prototype.encrypt = RSAEncrypt;</pre>
+<pre><code class="language-javascript">RSAKey.prototype.encrypt = RSAEncrypt;</code></pre>
 
 
 <p>to:</p>
 
-<pre>RSAKey.prototype._short_encrypt = RSAEncrypt;
-RSAKey.prototype.encrypt = RSAEncryptLong;</pre>
+<pre><code class="language-javascript">RSAKey.prototype._short_encrypt = RSAEncrypt;
+RSAKey.prototype.encrypt = RSAEncryptLong;</code></pre>
 
 
-<ol>
-<li>When using phpseclib to decrypt the message, set the encrypt mode to PKCS1:</li>
-</ol>
+<h3>3. When using phpseclib to decrypt the message, set the encrypt mode to PKCS1:</h3>
 
-
-<pre>$rsa = new Crypt_RSA();
-$rsa-&gt;setEncryptionMode(CRYPT_RSA_ENCRYPTION_PKCS1);</pre>
+<pre><code class="language-php">$rsa = new Crypt_RSA();
+$rsa-&gt;setEncryptionMode(CRYPT_RSA_ENCRYPTION_PKCS1);</code></pre>
 
 
 <h2> To Adopt the Solution</h2>
 
-<ol>
-<li>encrypt the message from browser:</li>
-</ol>
+<h3>1. encrypt the message from browser:</h3>
 
-
-<pre>&lt;script type="text/javascript" src="jsbn.js"&gt;&lt;/script&gt;
+<pre><code class="language-javascript">&lt;script type="text/javascript" src="jsbn.js"&gt;&lt;/script&gt;
 &lt;script type="text/javascript" src="prng4.js"&gt;&lt;/script&gt;
 &lt;script type="text/javascript" src="rng.js"&gt;&lt;/script&gt;
 &lt;script type="text/javascript" src="rsa.js"&gt;&lt;/script&gt;
@@ -448,15 +832,12 @@ function encrypt(msg) {
     rsa.setPublic('8a5f4d4fa7dd78ca8539ba8b9581b30c9ce04e1998cd881d5279221984bc606e2c7d3368dc184b357507966a0f20930ba665cd9e914d6b0b67c8636ffe8cacfd', '10001');
     return rsa.encrypt(msg);
 }
-&lt;/script&gt;</pre>
+&lt;/script&gt;</code></pre>
 
 
-<ol>
-<li>decrypt the message from the server using PHP:</li>
-</ol>
+<h3>2. decrypt the message from the server using PHP:</h3>
 
-
-<pre>require_once('Crypt/RSA.php');
+<pre><code class="language-php">require_once('Crypt/RSA.php');
 define("KEY_PRIVATE", "-----BEGIN RSA PRIVATE KEY-----
 MIIBOQIBAAJBAIpfTU+n3XjKhTm6i5WBswyc4E4ZmM2IHVJ5IhmEvGBuLH0zaNwYSzV1B5ZqDyCT
 C6ZlzZ6RTWsLZ8hjb/6MrP0CAwEAAQJAAlK9TTln9No5nbwtvHHesWHaO5V0b6b5ubkXmHlrtuwR
@@ -472,15 +853,12 @@ function decrypt(msg) {
     $rsa-&gt;loadKey(KEY_PRIVATE, CRYPT_RSA_PRIVATE_FORMAT_PKCS1);
     $s = new Math_BigInteger(msg, 16);
     retrun $rsa-&gt;decrypt($s-&gt;toBytes());
-}</pre>
+}</code></pre>
 
 
-<ol>
-<li>generate a new key pair:</li>
-</ol>
+<h3>3. generate a new key pair:</h3>
 
-
-<pre>require_once('Crypt/RSA.php');
+<pre><code class="language-php">require_once('Crypt/RSA.php');
 define('CRYPT_RSA_MODE', CRYPT_RSA_MODE_INTERNAL);
 $rsa = new Crypt_RSA();
 $rsa-&gt;setPublicKeyFormat(CRYPT_RSA_PUBLIC_FORMAT_RAW);
@@ -492,12 +870,12 @@ $n = new Math_BigInteger($key['publickey']['n'], 10);
 echo "Public Key:\n";
 echo $e-&gt;toHex();
 echo "\n";
-echo $n-&gt;toHex();</pre>
+echo $n-&gt;toHex();</code></pre>
 
 
 <p>At last is an example:</p>
 
-<pre>&lt;?php
+<pre><code class="language-php">&lt;?php
 require_once('Crypt/RSA.php');
 define("KEY_PRIVATE", "-----BEGIN RSA PRIVATE KEY-----
 MIIBOQIBAAJBAIpfTU+n3XjKhTm6i5WBswyc4E4ZmM2IHVJ5IhmEvGBuLH0zaNwYSzV1B5ZqDyCT
@@ -536,12 +914,12 @@ Plain Text:&lt;br/&gt;
 Encrypted Text:&lt;br/&gt;
 &lt;input id="enc_text" name='enc_text' type="text" size="40"/&gt;&lt;br/&gt;
 &lt;input name="submit" type="submit" value="Submit" size="10"/&gt;
-&lt;/form&gt;</pre>
+&lt;/form&gt;</code></pre>
 
 
-<h2> Finally</h2>
+<h2>Finally</h2>
 
-<p>I hope this solution would help some of you guys. Feel free to ask me questions, and if there&#8217;s something wrong with my article please help me to correct it.</p>
+<p>I hope this solution would help some of you guys. Feel free to ask me questions, and if there&rsquo;s something wrong with my article please help me to correct it.</p>
 ]]></content>
   </entry>
   
@@ -550,17 +928,19 @@ Encrypted Text:&lt;br/&gt;
     <link href="http://bestmike007.com/2011/07/perplexity-cross-entropy/"/>
     <updated>2011-07-23T00:00:00+08:00</updated>
     <id>http://bestmike007.com/2011/07/perplexity-cross-entropy</id>
-    <content type="html"><![CDATA[<p><a href="http://bestmike007.com/2011/07/perplexity-cross-entropy/a/" rel="attachment wp-att-41"><img class="alignnone size-full wp-image-41" title="Relation between Perplexity & Cross-entropy" src="http://bestmike007.com/uploads/2011/07/a.jpg" alt="" width="705" height="561" /></a>PS:</p>
+    <content type="html"><![CDATA[<p><a href="http://bestmike007.com/2011/07/perplexity-cross-entropy/a/" rel="attachment wp-att-41"><img class="alignnone size-full wp-image-41" title="Relation between Perplexity & Cross-entropy" src="http://bestmike007.com/uploads/2011/07/a.jpg" alt="" width="705" height="561" /></a></p>
 
-<ol>
-<li><p>Cross-entropy method website: <a href="http://iew3.technion.ac.il/CE/">http://iew3.technion.ac.il/CE/</a></p></li>
-<li><p>Toolkits:</p></li>
-</ol>
+<h2>Further Reading</h2>
 
+<p><a href="http://iew3.technion.ac.il/CE/">Cross-entropy method website</a></p>
 
-<p>SRILM: <a href="http://www-speech.sri.com/projects/srilm/">http://www-speech.sri.com/projects/srilm/</a></p>
+<p>Toolkits:</p>
 
-<p>Another toolkit: <a href="http://mi.eng.cam.ac.uk/~prc14/toolkit.html">http://mi.eng.cam.ac.uk/~prc14/toolkit.html</a></p>
+<ul>
+<li><a href="http://www-speech.sri.com/projects/srilm/">SRILM</a></li>
+<li><a href="http://mi.eng.cam.ac.uk/~prc14/toolkit.html">http://mi.eng.cam.ac.uk/~prc14/toolkit.html</a></li>
+</ul>
+
 ]]></content>
   </entry>
   
@@ -578,7 +958,7 @@ Encrypted Text:&lt;br/&gt;
 
 
 
-<pre>/*
+<pre><code class="language-java">/*
 
    Porter stemmer in Java. The original paper is in
 
@@ -1001,10 +1381,8 @@ class Stemmer
          break;
       }
    }
-}</pre>
+}</code></pre>
 
-
-<p>&nbsp;</p>
 ]]></content>
   </entry>
   

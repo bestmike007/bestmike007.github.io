@@ -52,6 +52,10 @@
 		
 		
 		
+		<a class="twitter" href="http://twitter.com/bestmike007" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/bestmike007" title="GitHub">GitHub</a>
 		
     
 		
@@ -74,7 +78,7 @@
 		
 	
 	<div id="content" class="inner"><article class="post">
-	<h2 class="title">Applying Patches on Unsupported XenServer 6.2</h2>
+	<h1 class="title">Applying Patches on Unsupported XenServer 6.2</h1>
 	<div class="entry-content"><p>It&rsquo;s easy to patch hostfixes through official XenCenter management software for XenServers with license, while without a license the XenServer have to be patched manually. Official website has an article on <a href="http://support.citrix.com/article/CTX132791L">how to apply a XenServer hotfix manually using the command line</a>. And this process is able to be done automatically with some scripts.</p>
 
 <!--more-->
@@ -96,8 +100,7 @@
 
 <p>We usually open the server (pool master if not standalone installation) console and enter several commands and copy &amp; paste intermediate outputs to apply the patch. So I have simplified the process by the following script.</p>
 
-<pre>
-#!/bin/bash
+<pre><code class="language-bash">#!/bin/bash
 # install a update package from citrix
 # e.g. http://downloadns.citrix.com.edgesuite.net/akdlm/*/XS*.zip
 URL=$1
@@ -110,12 +113,12 @@ unzip $PKG
 for file in $(ls *.xsupdate); do ( xe patch-pool-apply uuid=`xe patch-upload file-name=$file` ) done
 cd /tmp
 rm -rf update
-</pre>
+</code></pre>
 
 
 <p>We can save this script to <code>/root/patch</code>. And with this script, we simply apply the patch by running a single command.</p>
 
-<pre>bash# ./patch http://downloadns.citrix.com.edgesuite.net/akdlm/*/XS*.zip</pre>
+<pre><code class="language-bash">./patch http://downloadns.citrix.com.edgesuite.net/akdlm/*/XS*.zip</code></pre>
 
 
 <h2>Patch the Server Automatically</h2>
@@ -164,15 +167,15 @@ rm -rf update
 </article>
 
 	<div class="share">
-	<div class="addthis_toolbox addthis_default_style ">
-		
-		
-		<a class="addthis_button_tweet"></a>
-		
-		
-		
-	</div>
+
 	
+    
+    <a href="https://twitter.com/share" class="twitter-share-button" data-via="bestmike007">Tweet</a>
+    
+    
+    
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+    
 </div>
 
 
@@ -189,6 +192,7 @@ rm -rf update
 
 </footer>
 	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/prism.js"></script>
 <script src="/javascripts/jquery.fancybox.pack.js"></script>
 <script type="text/javascript">
 (function($){
@@ -215,6 +219,17 @@ rm -rf update
 
 
 
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
 	<script type="text/javascript">
 		var _gaq = _gaq || [];
 		_gaq.push(['_setAccount', 'UA-29233497-3']);
@@ -228,6 +243,9 @@ rm -rf update
 	</script>
 
 
+
+
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
 
 </body>
 </html>
