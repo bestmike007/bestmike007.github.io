@@ -17,29 +17,9 @@ During the last few days I was looking for an approach to secure data transmissi
 
 ## The Existing Projects
 
-At the very beginning I found this: <http://www.ohdave.com/rsa/>
+At the very beginning I found this: <http://www.ohdave.com/rsa/> It's quite good solution for JavaScript and I searched for the correlated PHP solution and I found this easily: <http://www.sematopia.com/2008/10/rsa-encrypting-in-javascript-and-decrypting-in-php/>. However, it uses the [Crypt_RSA package][1] with several dependencies and in some circumstances those packages would not be available. So I started to search for some pure PHP solution.
 
-&nbsp;
-
-It&#8217;s quite good solution for JavaScript and I searched for the correlated PHP solution and I found this easily: <http://www.sematopia.com/2008/10/rsa-encrypting-in-javascript-and-decrypting-in-php/>
-
-However, it uses the [Crypt_RSA package][1] with several dependencies and in some circumstances those packages would not be available. So I started to search for some pure PHP solution.
-
-Then I found this one: <http://code.google.com/p/bi2php/>
-
-I tried but failed to run this on my development computer with wamp running on Windows 2008r2.
-
-And this one: <http://stevish.com/rsa-encryption-in-pure-php>
-
-I don&#8217;t know because I hadn&#8217;t tried to make it work because I failed to find a correlated JavaScript implementation.
-
-And I found this from stanford: <http://www-cs-students.stanford.edu/~tjw/jsbn/>
-
-This is quite good except for the &#8220;message too long&#8221; limitation.
-
-And <https://ziyan.info/exibits/javascript-rsa/login.html> is almost based on that.
-
-At last I noticed <http://phpseclib.sourceforge.net/>. I&#8217;m quite sure it&#8217;s what I&#8217;m looking for and I tried to adapt it to the projects listed above but they all failed.
+Then I found this one: <http://code.google.com/p/bi2php/>. I tried but failed to run this on my development computer with wamp running on Windows 2008r2. And this one: <http://stevish.com/rsa-encryption-in-pure-php>. I don't know because I hadn't tried to make it work because I failed to find a correlated JavaScript implementation. And I found this from stanford: <http://www-cs-students.stanford.edu/~tjw/jsbn/>. This is quite good except for the 'message too long' limitation. And <https://ziyan.info/exibits/javascript-rsa/login.html> is almost based on that. At last I noticed <http://phpseclib.sourceforge.net/>. I'm quite sure it's what I'm looking for and I tried to adapt it to the projects listed above but they all failed.
 
 Then I tried to make some adaption for some of the JavaScript implementation and finally I built an adapted version of jsbn that works with phpseclib.
 
@@ -47,9 +27,9 @@ Then I tried to make some adaption for some of the JavaScript implementation and
 
 This solution makes phpseclib works with RSA and ECC in JavaScript from <http://www-cs-students.stanford.edu/~tjw/jsbn/> with some modification.
 
-1. Edit the rsa.js, add a function after the RSAEncrypt function:
+### 1. Edit the rsa.js, add a function after the RSAEncrypt function:
 
-<pre>function RSAEncryptLong(text) {
+<pre><code class="language-javascript">function RSAEncryptLong(text) {
   var length = ((this.n.bitLength()+7)&gt;&gt;3) - 11;
   if (length &lt;= 0) return false;
   var ret = "";
@@ -60,27 +40,27 @@ This solution makes phpseclib works with RSA and ECC in JavaScript from <http:
   }
   ret += this._short_encrypt(text.substring(i,text.length));
   return ret;
-}</pre>
+}</code></pre>
 
-2. modify the last line from
+### 2. modify the last line from
 
-<pre>RSAKey.prototype.encrypt = RSAEncrypt;</pre>
+<pre><code class="language-javascript">RSAKey.prototype.encrypt = RSAEncrypt;</code></pre>
 
 to:
 
-<pre>RSAKey.prototype._short_encrypt = RSAEncrypt;
-RSAKey.prototype.encrypt = RSAEncryptLong;</pre>
+<pre><code class="language-javascript">RSAKey.prototype._short_encrypt = RSAEncrypt;
+RSAKey.prototype.encrypt = RSAEncryptLong;</code></pre>
 
-3. When using phpseclib to decrypt the message, set the encrypt mode to PKCS1:
+### 3. When using phpseclib to decrypt the message, set the encrypt mode to PKCS1:
 
-<pre>$rsa = new Crypt_RSA();
-$rsa-&gt;setEncryptionMode(CRYPT_RSA_ENCRYPTION_PKCS1);</pre>
+<pre><code class="language-php">$rsa = new Crypt_RSA();
+$rsa-&gt;setEncryptionMode(CRYPT_RSA_ENCRYPTION_PKCS1);</code></pre>
 
 ##  To Adopt the Solution
 
-1. encrypt the message from browser:
+### 1. encrypt the message from browser:
 
-<pre>&lt;script type="text/javascript" src="jsbn.js"&gt;&lt;/script&gt;
+<pre><code class="language-javascript">&lt;script type="text/javascript" src="jsbn.js"&gt;&lt;/script&gt;
 &lt;script type="text/javascript" src="prng4.js"&gt;&lt;/script&gt;
 &lt;script type="text/javascript" src="rng.js"&gt;&lt;/script&gt;
 &lt;script type="text/javascript" src="rsa.js"&gt;&lt;/script&gt;
@@ -90,11 +70,11 @@ function encrypt(msg) {
 	rsa.setPublic('8a5f4d4fa7dd78ca8539ba8b9581b30c9ce04e1998cd881d5279221984bc606e2c7d3368dc184b357507966a0f20930ba665cd9e914d6b0b67c8636ffe8cacfd', '10001');
 	return rsa.encrypt(msg);
 }
-&lt;/script&gt;</pre>
+&lt;/script&gt;</code></pre>
 
-2. decrypt the message from the server using PHP:
+### 2. decrypt the message from the server using PHP:
 
-<pre>require_once('Crypt/RSA.php');
+<pre><code class="language-php">require_once('Crypt/RSA.php');
 define("KEY_PRIVATE", "-----BEGIN RSA PRIVATE KEY-----
 MIIBOQIBAAJBAIpfTU+n3XjKhTm6i5WBswyc4E4ZmM2IHVJ5IhmEvGBuLH0zaNwYSzV1B5ZqDyCT
 C6ZlzZ6RTWsLZ8hjb/6MrP0CAwEAAQJAAlK9TTln9No5nbwtvHHesWHaO5V0b6b5ubkXmHlrtuwR
@@ -110,11 +90,11 @@ function decrypt(msg) {
 	$rsa-&gt;loadKey(KEY_PRIVATE, CRYPT_RSA_PRIVATE_FORMAT_PKCS1);
 	$s = new Math_BigInteger(msg, 16);
 	retrun $rsa-&gt;decrypt($s-&gt;toBytes());
-}</pre>
+}</code></pre>
 
-3. generate a new key pair:
+### 3. generate a new key pair:
 
-<pre>require_once('Crypt/RSA.php');
+<pre><code class="language-php">require_once('Crypt/RSA.php');
 define('CRYPT_RSA_MODE', CRYPT_RSA_MODE_INTERNAL);
 $rsa = new Crypt_RSA();
 $rsa-&gt;setPublicKeyFormat(CRYPT_RSA_PUBLIC_FORMAT_RAW);
@@ -126,11 +106,11 @@ $n = new Math_BigInteger($key['publickey']['n'], 10);
 echo "Public Key:\n";
 echo $e-&gt;toHex();
 echo "\n";
-echo $n-&gt;toHex();</pre>
+echo $n-&gt;toHex();</code></pre>
 
 At last is an example:
 
-<pre>&lt;?php
+<pre><code class="language-php">&lt;?php
 require_once('Crypt/RSA.php');
 define("KEY_PRIVATE", "-----BEGIN RSA PRIVATE KEY-----
 MIIBOQIBAAJBAIpfTU+n3XjKhTm6i5WBswyc4E4ZmM2IHVJ5IhmEvGBuLH0zaNwYSzV1B5ZqDyCT
@@ -169,10 +149,10 @@ Plain Text:&lt;br/&gt;
 Encrypted Text:&lt;br/&gt;
 &lt;input id="enc_text" name='enc_text' type="text" size="40"/&gt;&lt;br/&gt;
 &lt;input name="submit" type="submit" value="Submit" size="10"/&gt;
-&lt;/form&gt;</pre>
+&lt;/form&gt;</code></pre>
 
-##  Finally
+## Finally
 
-I hope this solution would help some of you guys. Feel free to ask me questions, and if there&#8217;s something wrong with my article please help me to correct it.
+I hope this solution would help some of you guys. Feel free to ask me questions, and if there's something wrong with my article please help me to correct it.
 
  [1]: http://pear.php.net/package/Crypt_RSA/

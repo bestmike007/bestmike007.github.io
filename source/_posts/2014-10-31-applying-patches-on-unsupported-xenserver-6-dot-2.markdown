@@ -28,8 +28,7 @@ And we'll get a download like this: ```http://downloadns.citrix.com.edgesuite.ne
 
 We usually open the server (pool master if not standalone installation) console and enter several commands and copy & paste intermediate outputs to apply the patch. So I have simplified the process by the following script.
 
-<pre>
-#!/bin/bash
+<pre><code class="language-bash">#!/bin/bash
 # install a update package from citrix
 # e.g. http://downloadns.citrix.com.edgesuite.net/akdlm/*/XS*.zip
 URL=$1
@@ -42,11 +41,11 @@ unzip $PKG
 for file in $(ls *.xsupdate); do ( xe patch-pool-apply uuid=`xe patch-upload file-name=$file` ) done
 cd /tmp
 rm -rf update
-</pre>
+</code></pre>
 
 We can save this script to ```/root/patch```. And with this script, we simply apply the patch by running a single command.
 
-<pre>bash# ./patch http://downloadns.citrix.com.edgesuite.net/akdlm/*/XS*.zip</pre>
+<pre><code class="language-bash">./patch http://downloadns.citrix.com.edgesuite.net/akdlm/*/XS*.zip</code></pre>
 
 ## Patch the Server Automatically
 

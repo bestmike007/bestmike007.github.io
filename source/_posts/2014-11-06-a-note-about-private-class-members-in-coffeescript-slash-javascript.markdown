@@ -24,7 +24,7 @@ Most mainstream programming languages adopt the Object-oriented Programming (OOP
 
 In JavaScript, we use `function` and `prototype` to implement classes.
 
-<pre>function Square(side) {
+<pre><code class="language-javascript">function Square(side) {
     this.side = side; // initialize class variable
 }
 Square.prototype.area = function() {
@@ -34,7 +34,7 @@ var a = new Square(2);
 console.log(a.area()); // output: 4
 var b = new Square(3)
 console.log(b.area()); // output: 9
-</pre>
+</code></pre>
 
 Usually we wrap the definition of a class or a block of code with function scope `(function() { /* class definition */ })()` mainly for the following considerations:
 
@@ -43,7 +43,7 @@ Usually we wrap the definition of a class or a block of code with function scope
 
 In CoffeeScript, defining a class is much more simpler.
 
-<pre>class Square
+<pre><code class="language-coffeescript">class Square
     constructor: (side) ->
         @side = side
     area: ->
@@ -52,11 +52,11 @@ a = new Square(2)
 console.log a.area() # output 4
 b = new Square(3)
 console.log b.area() # output 9
-</pre>
+</code></pre>
 
 Which compiles into:
 
-<pre>var Square, a, b;
+<pre><code class="language-javascript">var Square, a, b;
 Square = (function() {
   function Square(side) {
     this.side = side;
@@ -70,7 +70,7 @@ a = new Square(2);
 console.log(a.area());
 b = new Square(3);
 console.log(b.area());
-</pre>
+</code></pre>
 
 We can see that CoffeeScript wrap the definition of a class with function scope automatically. Actually, CoffeeScript uses a function scope to wrap every JavaScript file compiled from CoffeeScript in case of collision.
 
@@ -80,7 +80,7 @@ In classes defined with JavaScript function and prototype, there is no private m
 
 The basic thought of implementing private field is to encapsulate variables and methods in anonymous function scope. The following example adds private static variables and methods in a class.
 
-<pre># CoffeeScript
+<pre><code class="language-coffeescript"># CoffeeScript
 class Counter
     # private static variable
     counter = 0
@@ -95,11 +95,11 @@ class Counter
 c1 = new Counter()
 c2 = new Counter()
 console.log Counter.instanceCount() # output 2
-</pre>
+</code></pre>
 
 Which compiles into:
 
-<pre>var Counter, c1, c2;
+<pre><code class="language-javascript">var Counter, c1, c2;
 Counter = (function() {
   var countInstance, counter;
   counter = 0;
@@ -117,11 +117,11 @@ Counter = (function() {
 c1 = new Counter();
 c2 = new Counter();
 console.log(Counter.instanceCount());
-</pre>
+</code></pre>
 
 The first function scope to create the class Counter is created only once; so that the variables and methods inside has only one instance and they are accessible from all class methods and instance methods. In order to implement private instance fields, we have to create a new function scope every time the class is instanciated. Considering that all private instance fields have to be accessible from all instance methods, public methods must be either inside the same function scope of the private fields or in one of the descendants, which means that we have to define public methods every time a instance is created so that prototype is not suitable for such situation. Here is an example of class definition with public and private fields and static fields.
 
-<pre># CoffeeScript
+<pre><code class="language-coffeescript"># CoffeeScript
 class Square
     # private static variable
     counter = 0
@@ -151,11 +151,11 @@ console.log s2.area()   # output 9
 s2.setSide 4            # output Side is set to 4
 console.log s2.area()   # output 16
 console.log Square.instanceCount() # output 2
-</pre>
+</code></pre>
 
 Which compiles into:
 
-<pre>var Square, s1, s2;
+<pre><code class="language-javascript">var Square, s1, s2;
 Square = (function() {
   var countInstance, counter;
   counter = 0;
@@ -189,7 +189,7 @@ console.log(s2.area());
 s2.setSide(4);
 console.log(s2.area());
 console.log(Square.instanceCount());
-</pre>
+</code></pre>
 
 That's a way to implement class member encapsulation in normal cases (not too many instances and do not need inheritance). What about protected members and class inheritance?
 
@@ -197,7 +197,7 @@ That's a way to implement class member encapsulation in normal cases (not too ma
 
 Without encapsulated fields, class inheritance is easy to implement with function and prototype. And that's how [protoype.js](http://prototypejs.org/) implement class inheritance. For example:
 
-<pre># CoffeeScript run with prototype.js
+<pre><code class="language-coffeescript"># CoffeeScript run with prototype.js
 Rectangle = Class.create {
     initialize: (a, b) ->
         this.a = a
@@ -214,11 +214,11 @@ Square = Class.create Rectangle, {
 }
 s = new Square(4)
 console.log s.area() # output 16
-</pre>
+</code></pre>
 
 Which compiles into:
 
-<pre>var Rectangle, Square, r, s;
+<pre><code class="language-javascript">var Rectangle, Square, r, s;
 
 Rectangle = Class.create({
   initialize: function(a, b) {
@@ -238,7 +238,7 @@ Square = Class.create(Rectangle, {
   }
 });
 s = new Square(4);
-console.log(s.area());</pre>
+console.log(s.area());</code></pre>
 
 To learn more about the prototype.js implementation, please read [the source code](https://github.com/sstephenson/prototype/blob/master/src/prototype/lang/class.js).
 

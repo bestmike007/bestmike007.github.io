@@ -13,7 +13,7 @@ Official website for this algorithm: <http://tartarus.org/~martin/PorterStemmer
 
 <!--more-->
 
-<pre>/*
+<pre><code class="language-java">/*
 
    Porter stemmer in Java. The original paper is in
 
@@ -436,6 +436,4 @@ class Stemmer
          break;
       }
    }
-}</pre>
-
-&nbsp;
+}</code></pre>

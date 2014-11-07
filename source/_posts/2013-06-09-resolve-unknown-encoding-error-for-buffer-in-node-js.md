@@ -16,15 +16,17 @@ According to the official document for Buffer implementation, the Buffer class o
 
 This solution requires iconv. You can install it with npm.
 
-<pre>npm install iconv</pre>
+<pre><code class="language-bash">npm install iconv</code></pre>
 
 And then before using Buffer.toString method, override it with the following code.
 
-<pre>var Iconv = require('iconv').Iconv;
+<pre><code class="language-javascript">var Iconv = require('iconv').Iconv;
 
 Buffer.prototype._$_toString = Buffer.prototype.toString;
 Buffer.prototype.toString = function(charset) {
-    if (typeof charset == 'undefined' || charset == 'utf8' || charset == 'utf16le' || charset == 'ascii' || charset == 'ucs2' || charset == 'binary' || charset == 'base64' || charset == 'hex') {
+    if (typeof charset == 'undefined' || charset == 'utf8' || charset == 'utf16le'
+            || charset == 'ascii' || charset == 'ucs2' || charset == 'binary'
+            || charset == 'base64' || charset == 'hex') {
         return this._$_toString.apply(this, arguments);
     }
     var iconv = new Iconv(charset, 'UTF-8');
@@ -32,8 +34,8 @@ Buffer.prototype.toString = function(charset) {
     var args = arguments;
     args[0] = 'utf8';
     return buffer.toString.apply(buffer, args);
-}</pre>
+}</code></pre>
 
-And that&#8217;s all.
+And that's all.
 
-P.S. This solution is originated from <a href="http://stackoverflow.com/questions/14551608/cant-find-encodings-for-node-js" target="_blank">http://stackoverflow.com/questions/14551608/cant-find-encodings-for-node-js</a>
+P.S. This solution is originated from [http://stackoverflow.com/questions/14551608/cant-find-encodings-for-node-js](http://stackoverflow.com/questions/14551608/cant-find-encodings-for-node-js)
