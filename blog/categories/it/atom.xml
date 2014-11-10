@@ -4,7 +4,7 @@
   <title><![CDATA[Category: it | Mike's Blog]]></title>
   <link href="http://bestmike007.com/blog/categories/it/atom.xml" rel="self"/>
   <link href="http://bestmike007.com/"/>
-  <updated>2014-11-08T01:47:13+08:00</updated>
+  <updated>2014-11-10T10:19:14+08:00</updated>
   <id>http://bestmike007.com/</id>
   <author>
     <name><![CDATA[Mike He]]></name>
@@ -403,7 +403,7 @@ console.log B.instanceCount() # output: 1
 
 <p>Protected members in this example are not strictly &lsquo;protected&rsquo;, but are &lsquo;protected abstract&rsquo; and can be override in subclass. That&rsquo;s because protected methods are not implemented with scope chain in this class helper. And there might be better implementation. If you don&rsquo;t understand the example listed above, maybe you should learn more about JavaScript scope chain, prototype and closure.</p>
 
-<p>Fortunately, in most cases we do not need protected members, at least we usually do not need protected methods that cannot be override. So that the class helper like above is sufficient for most use cases. Please note that the class helper above is not well tested for production use.</p>
+<p>Fortunately, in most cases we do not need protected members, at least we usually do not need protected methods that cannot be override. So that the class helper like above is sufficient for most use cases. Please note that the class helper above is not well tested for production use and is available <a href="https://github.com/bestmike007/JavaScript-Private-Member-Example">on github</a>.</p>
 
 <h2>Performance Issues</h2>
 
