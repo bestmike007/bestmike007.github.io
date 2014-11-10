@@ -376,7 +376,7 @@ console.log B.instanceCount() # output: 1
 
 Protected members in this example are not strictly 'protected', but are 'protected abstract' and can be override in subclass. That's because protected methods are not implemented with scope chain in this class helper. And there might be better implementation. If you don't understand the example listed above, maybe you should learn more about JavaScript scope chain, prototype and closure.
 
-Fortunately, in most cases we do not need protected members, at least we usually do not need protected methods that cannot be override. So that the class helper like above is sufficient for most use cases. Please note that the class helper above is not well tested for production use.
+Fortunately, in most cases we do not need protected members, at least we usually do not need protected methods that cannot be override. So that the class helper like above is sufficient for most use cases. Please note that the class helper above is not well tested for production use and is available [on github](https://github.com/bestmike007/JavaScript-Private-Member-Example).
 
 ## Performance Issues
 
