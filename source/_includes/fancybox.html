@@ -1,6 +1,7 @@
-<script src="{{ root_url }}/javascripts/jquery.fancybox.pack.js"></script>
+<link href="//cdnjs.bestmike007.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen, projection" rel="stylesheet" type="text/css">
+<script src="//cdnjs.bestmike007.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
 <script type="text/javascript">
 (function($){
-	$('.fancybox').fancybox();
+	$('.fancybox:not(.nofancybox)').fancybox();
 })(jQuery);
 </script>

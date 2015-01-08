@@ -1,8 +1,10 @@
 ---
 layout: default
 single: true
+is_blog: true
 ---
 
+<div class='container'>
 <article class="post">{% include article.html %}</article>
 {% unless page.sharing == false %}
 	{% include post/sharing.html %}
@@ -13,3 +15,4 @@ single: true
     <div id="disqus_thread" aria-live="polite">{% include post/disqus_thread.html %}</div>
 </section>
 {% endif %}
+</div>

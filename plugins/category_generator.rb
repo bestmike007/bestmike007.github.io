@@ -164,7 +164,7 @@ ERR
     #
     def category_link(category)
       dir = @context.registers[:site].config['category_dir']
-      "<a class='category' href='/#{dir}/#{category.to_url}/'>#{category}</a>"
+      "<a class='category' href='/#{dir}/#{category.to_url}/'><span class='label label-default'>#{category}</span></a>"
     end
 
     # Outputs the post.date as formatted html, with hooks for CSS styling.
@@ -173,6 +173,7 @@ ERR
     #
     # Returns string
     def date_to_html_string(date)
+      return if date.nil?
       result = '<span class="month">' + date.strftime('%b').upcase + '</span> '
       result << date.strftime('<span class="day">%d</span> ')
       result << date.strftime('<span class="year">%Y</span> ')

@@ -3,9 +3,9 @@
 # ----------------------- #
 
 url: http://bestmike007.com
-title: "Mike's Blog"
-subtitle: "Mike's personal blog."
-author: Mike He
+title: "Theoretically about Techniques"
+subtitle: "Let us create that which has never been."
+author: bestmike007
 simple_search: https://www.google.com/search
 description:
 
@@ -13,7 +13,7 @@ description:
 # You can customize the format as defined in
 # http://www.ruby-doc.org/core-1.9.2/Time.html#method-i-strftime
 # Additionally, %o will give you the ordinal representation of the day
-date_format: "%Y-%m-%d %k-%M"
+date_format: "%Y-%m-%d %k:%M"
 timezone: "Asia/Chongqing"
 
 # RSS / Email (optional) subscription links (change if using something like Feedburner)
@@ -73,6 +73,8 @@ github_skip_forks: true
 # Twitter
 twitter_user: bestmike007
 twitter_tweet_button: true
+
+linkedin_user: bestmike007
 
 # Google +1
 google_plus_one: false

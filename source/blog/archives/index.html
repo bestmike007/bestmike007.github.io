@@ -1,8 +1,10 @@
 ---
 layout: default
 title: Blog Archives
+is_blog: true
 ---
-
+<div class='container'>
 {% for post in site.posts reverse %}
 	{% include archive_post.html %}
 {% endfor %}
+</div>

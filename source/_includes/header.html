@@ -1,59 +1,60 @@
-<h1><a href="{{ root_url }}/">{{ site.title }}</a></h1>
-<nav id="main-nav">{% include navigation.html %}</nav>
-<nav id="mobile-nav">
-	<div class="alignleft menu">
-		<a class="button">Menu</a>
-		<div class="container">{% include navigation.html %}</div>
+<div class="navbar navbar-default">
+	<div class='container'>
+	  <div class="navbar-header">
+	    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+	      <span class="icon-bar"></span>
+	      <span class="icon-bar"></span>
+	      <span class="icon-bar"></span>
+	    </button>
+	    {% capture home_path %}{% if page.is_blog %}blog{% else %}{{ page.home_path }}{% endif %}{% endcapture %}
+			<h1><a class="navbar-brand" href="{{ root_url }}/{{ home_path }}">{% if page.site_title %}{{page.site_title}}{% else %}{{ site.title }}{% endif %}</a></h1>
+	  </div>
+	  <div class="navbar-collapse collapse navbar-responsive-collapse">
+	    <ul class="nav navbar-nav">
+				{% include navigation.html %}
+	    </ul>
+	    <ul class="nav navbar-nav navbar-right">
+				{% if site.facebook_user %}
+				<li><a class="facebook" href="http://www.facebook.com/{{ site.facebook_user }}" title="Facebook">Facebook</a></li>
+				{% endif %}
+				{% if site.googleplus_user and site.googleplus_hidden == false %}
+				<li><a class="google" href="https://plus.google.com/{{ site.googleplus_user }}?rel=author" title="Google+">Google+</a></li>
+				{% endif %}
+				{% if site.twitter_user %}
+				<li><a class="twitter" href="http://twitter.com/{{ site.twitter_user }}" title="Twitter">Twitter</a></li>
+				{% endif %}
+				{% if site.github_user %}
+				<li><a class="github" href="https://github.com/{{ site.github_user }}" title="GitHub">GitHub</a></li>
+				{% endif %}
+		    {% if site.pinboard_user %}
+		    <li><a class="pinboard" href="https://pinboard.in/u:{{ site.pinboard_user }}" title="Pinboard">Pinboard</a></li>
+		    {% endif %}
+				{% if site.coderwall_user %}
+				<li><a class="coderwall" href="https://coderwall.com/{{ site.coderwall_user }}" title="Coderwall">Coderwall</a></li>
+				{% endif %}
+				{% if site.linkedin_user %}
+				<li><a class="linkedin" href="http://www.linkedin.com/in/{{ site.linkedin_user }}">LinkedIn</a></li>
+				{% endif %}
+				{% if site.pinterest_user %}
+				<li><a class="pinterest" href="https://pinterest.com/{{ site.pinterest_user }}" title="Pinterest">Pinterest</a></li>
+				{% endif %}
+				{% if site.delicious_user %}
+				<li><a class="delicious" href="http://delicious.com/{{ site.delicious_user }}" title="Delicious">Delicious</a></li>
+				{% endif %}
+				{% if site.subscribe_rss %}
+				<li><a class="rss" href="{{ site.subscribe_rss }}" title="RSS">RSS</a></li>
+				{% endif %}
+		    {% if site.instagram_user %}
+		    <li><a class="instagram" href="http://instagram.com/{{ site.instagram_user }}" title="Instagram">Instagram</a></li>
+				{% endif %}
+	      <li>
+			    <form action="{{ site.simple_search }}" method="get" class="navbar-form navbar-left">
+			      <input type="text" name="q" class="form-control col-lg-8" placeholder="Search">
+						<input type="hidden" name="q" value="site:{{ site.url | shorthand_url }}">
+			    </form>
+	      </li>
+	    </ul>
+	  </div>
 	</div>
-	<div class="alignright search">
-		<a class="button"></a>
-		<div class="container">
-			<form action="{{ site.simple_search }}" method="get">
-				<input type="text" name="q" results="0">
-				<input type="hidden" name="q" value="site:{{ site.url | shorthand_url }}">
-			</form>
-		</div>
-	</div>
-</nav>
-<nav id="sub-nav" class="alignright">
-	<div class="social">
-		{% if site.facebook_user %}
-		<a class="facebook" href="http://www.facebook.com/{{ site.facebook_user }}" title="Facebook">Facebook</a>
-		{% endif %}
-		{% if site.googleplus_user and site.googleplus_hidden == false %}
-		<a class="google" href="https://plus.google.com/{{ site.googleplus_user }}?rel=author" title="Google+">Google+</a>
-		{% endif %}
-		{% if site.twitter_user %}
-		<a class="twitter" href="http://twitter.com/{{ site.twitter_user }}" title="Twitter">Twitter</a>
-		{% endif %}
-		{% if site.github_user %}
-		<a class="github" href="https://github.com/{{ site.github_user }}" title="GitHub">GitHub</a>
-		{% endif %}
-    {% if site.pinboard_user %}
-    <a class="pinboard" href="https://pinboard.in/u:{{ site.pinboard_user }}" title="Pinboard">Pinboard</a>
-    {% endif %}
-		{% if site.coderwall_user %}
-		<a class="coderwall" href="https://coderwall.com/{{ site.coderwall_user }}" title="Coderwall">Coderwall</a>
-		{% endif %}
-		{% if site.linkedin_user %}
-		<a class="linkedin" href="http://www.linkedin.com/in/{{ site.linkedin_user }}">LinkedIn</a>
-		{% endif %}
-		{% if site.pinterest_user %}
-		<a class="pinterest" href="https://pinterest.com/{{ site.pinterest_user }}" title="Pinterest">Pinterest</a>
-		{% endif %}
-		{% if site.delicious_user %}
-		<a class="delicious" href="http://delicious.com/{{ site.delicious_user }}" title="Delicious">Delicious</a>
-		{% endif %}
-		{% if site.subscribe_rss %}
-		<a class="rss" href="{{ site.subscribe_rss }}" title="RSS">RSS</a>
-		{% endif %}
-    {% if site.instagram_user %}
-    <a class="instagram" href="http://instagram.com/{{ site.instagram_user }}" title="Instagram">Instagram</a>
-		{% endif %}
-	</div>
-	<form class="search" action="{{ site.simple_search }}" method="get">
-		<input class="alignright" type="text" name="q" results="0">
-		<input type="hidden" name="q" value="site:{{ site.url | shorthand_url }}">
-	</form>
-</nav>
+</div>
 {% include custom/header.html %}

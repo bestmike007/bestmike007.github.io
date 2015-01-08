@@ -1,26 +1,32 @@
-{% if index %}
-	<h2 class="title index">
-		{% if post.external-url %}
-		<a href="{{ post.external-url }}">
-		{% else %}
-		<a href="{{ root_url }}{{ post.url }}">
-		{% endif %}
-			{% if site.titlecase %}{{ post.title | titlecase }}{% else %}{{ post.title }}{% endif %}</a>
-	</h2>
-	<div class="entry-content">
-		{{ content | excerpt }}
-		{% capture excerpted %}{{ content | has_excerpt }}{% endcapture %}
-		{% if excerpted == 'true' %}<a href="{{ root_url }}{{ post.url }}" class="more-link">{{ site.excerpt_link }}</a>{% endif %}
-	</div>
-{% else %}
-	<h1 class="title">{% if site.titlecase %}{{ page.title | titlecase }}{% else %}{{ page.title }}{% endif %}</h1>
-	<div class="entry-content">{{ content }}</div>
-{% endif %}
-
-<div class="meta">
+{% capture metadata %}
+<div class="meta" style="margin-bottom: 10px;">
 	<div class="date">{% include post/date.html %}{{ time }}</div>
 	<div class="tags">{% include post/categories.html %}</div>
 	{% if site.disqus_short_name and site.disqus_show_comment_count == true %}
 	<div class="comments"><a href="{{ root_url }}{% if index %}{{ post.url }}{% endif %}#disqus_thread">Comments</a></div>
 	{% endif %}
 </div>
+{% endcapture %}
+
+{% if index %}
+<div class="page-header">
+	<h2 class="title index">
+		{% if post.external-url %}
+		<a href="{{ post.external-url }}">
+		{% else %}
+		<a href="{{ root_url }}{{ post.url }}">
+		{% endif %}
+		{% if site.titlecase %}{{ post.title | titlecase }}{% else %}{{ post.title }}{% endif %}</a>
+	</h2>
+</div>
+{{ metadata }}
+<div class="entry-content">
+	{{ content | excerpt }}
+	{% capture excerpted %}{{ content | has_excerpt }}{% endcapture %}
+	{% if excerpted == 'true' %}<a href="{{ root_url }}{{ post.url }}" class="more-link">{{ site.excerpt_link }}</a>{% endif %}
+</div>
+{% else %}
+	<div class="page-header"><h1 class="title">{% if site.titlecase %}{{ page.title | titlecase }}{% else %}{{ page.title }}{% endif %}</h1></div>
+	{{ metadata }}
+	<div class="entry-content">{{ content }}</div>
+{% endif %}

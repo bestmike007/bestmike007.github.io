@@ -7,7 +7,7 @@ comments: true
 categories:
   - NLP
 ---
-<a href="http://bestmike007.com/2011/07/perplexity-cross-entropy/a/" rel="attachment wp-att-41"><img class="alignnone size-full wp-image-41" title="Relation between Perplexity & Cross-entropy" src="http://bestmike007.com/uploads/2011/07/a.jpg" alt="" width="705" height="561" /></a>
+<a href="#" rel="attachment wp-att-41"><img class="alignnone size-full wp-image-41" title="Relation between Perplexity & Cross-entropy" src="http://bestmike007.com/uploads/2011/07/a.jpg" alt="" width="705" height="561" /></a>
 
 ## Further Reading
 

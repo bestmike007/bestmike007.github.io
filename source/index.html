@@ -1,18 +1,26 @@
 ---
-layout: default
+layout: page
+title: "Yuanhai He - Yet another Geek"
+site_title: "About Me"
+date: 2015-01-08 17:50
+comments: false
+sharing: true
+footer: true
 ---
+<div class='container'>
 
-{% assign index = true %}
-{% for post in paginator.posts %}
-{% assign content = post.content %}
-    <article class="post">{% include article.html %}</article>
-{% endfor %}
-<nav id="pagenavi">
-    {% if paginator.previous_page %}
-        <a href="{{paginator.previous_page_path}}" class="prev">Prev</a>
-    {% endif %}
-    {% if paginator.next_page %}
-        <a href="{{paginator.next_page_path}}" class="next">Next</a>
-    {% endif %}
-    <div class="center"><a href="{{ root_url }}/blog/archives">Blog Archives</a></div>
-</nav>
+<div class="col-lg-6" style="font-size: 110%; line-height: 28px;">
+<p>Hi! My name is Yuanhai He, they also call me Mike. <br>I am an Entrepreneur, Product Manager and Software Engineer.</p>
+
+<p>My focus is on full-stack programming for web and mobile applications as well as user experience and building a scalable infrastructure. I am currently working as Backend Engineer at Beego Ltd., Chegndu China. My interests extend into machine learning, big data analysis, cloud computing and team building.</p>
+
+<p>I have a Bachelor as well as a Masters in Software Engineer from the <a href="http://software.nju.edu.cn/">Software Institue of Nanjing University</a>. I co-founded the startup Beego, a company that build mobile apps and smart hardware apps in order to encourage everyone to do things well, where I was in charge of building a scalable infrastructure.</p>
+
+<p>I also maintain several open-source projects which, I think, might be helpful to someone else, and I love to contribute to the open source community. I&rsquo;ll keep thinking about the next big thing to change our world.</p>
+
+<p>I&rsquo;m temporarily based in Chengdu, the biggest software park in the west of China. I am looking for new ideas, like-minded people and also chances to make a change to our world. Feel free to say hi!<br>i `at` bestmike007.com</p>
+</div>
+
+<div class="col-lg-4" style="background: url(https://avatars1.githubusercontent.com/u/432106?v=3&s=400); height: 400px;">
+</div>
+</div>
