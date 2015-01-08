@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Mike's Blog]]></title>
+  <title><![CDATA[Theoretically about Techniques]]></title>
   <link href="http://bestmike007.com/atom.xml" rel="self"/>
   <link href="http://bestmike007.com/"/>
-  <updated>2014-12-22T17:58:07+08:00</updated>
+  <updated>2015-01-08T19:01:20+08:00</updated>
   <id>http://bestmike007.com/</id>
   <author>
-    <name><![CDATA[Mike He]]></name>
+    <name><![CDATA[bestmike007]]></name>
     
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
@@ -928,7 +928,7 @@ Encrypted Text:&lt;br/&gt;
     <link href="http://bestmike007.com/2011/07/perplexity-cross-entropy/"/>
     <updated>2011-07-23T00:00:00+08:00</updated>
     <id>http://bestmike007.com/2011/07/perplexity-cross-entropy</id>
-    <content type="html"><![CDATA[<p><a href="http://bestmike007.com/2011/07/perplexity-cross-entropy/a/" rel="attachment wp-att-41"><img class="alignnone size-full wp-image-41" title="Relation between Perplexity & Cross-entropy" src="http://bestmike007.com/uploads/2011/07/a.jpg" alt="" width="705" height="561" /></a></p>
+    <content type="html"><![CDATA[<p><a href="#" rel="attachment wp-att-41"><img class="alignnone size-full wp-image-41" title="Relation between Perplexity & Cross-entropy" src="http://bestmike007.com/uploads/2011/07/a.jpg" alt="" width="705" height="561" /></a></p>
 
 <h2>Further Reading</h2>
 
