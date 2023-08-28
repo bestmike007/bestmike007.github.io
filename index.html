@@ -119,11 +119,11 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
     $.ajax({
-      url: 'https://get.geojs.io/v1/ip/country.js',
+      url: 'https://jsonip.com',
       jsonp: 'callback',
       dataType: 'jsonp',
       success: function (data) {
-        if (data.country !== 'CN') $('#miitbeian').hide();
+        if (data.country!= null && data.country !== 'CN') $('#miitbeian').hide();
       }
     });
   </script>
