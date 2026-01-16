@@ -107,7 +107,7 @@
       <a href="https://beian.miit.gov.cn" id="miitbeian" target="_blank" style="color:#222;font-size:13px">粤ICP备18073072号</a>
     </footer>
   </div>
-  <script src="https://cdn.staticfile.org/jquery/3.5.1/jquery.min.js"></script>
+  <script src="/javascripts/jquery.js"></script>
 
   <script type="text/javascript">
     var _gaq = _gaq || [];
@@ -119,11 +119,11 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
     $.ajax({
-      url: 'https://jsonip.com',
+      url: 'http://ip-api.com/json?fields=40962',
       jsonp: 'callback',
       dataType: 'jsonp',
       success: function (data) {
-        if (data.country!= null && data.country !== 'CN') $('#miitbeian').hide();
+        if (data.countryCode!= null && data.countryCode !== 'CN') $('#miitbeian').hide();
       }
     });
   </script>
