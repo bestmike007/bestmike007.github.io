@@ -118,11 +118,16 @@
       ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
+    $('#miitbeian').hide();
+    const st = setTimeout(function() { $('#miitbeian').show() }, 2000);
     $.ajax({
       url: 'https://ipapi.co/json',
       dataType: 'json',
       success: function (data) {
-        if (data.country!= null && data.country !== 'CN') $('#miitbeian').hide();
+        if (data.country!= null && data.country !== 'CN') {
+          clearTimeout(st);
+          $('#miitbeian').hide();
+        } else $('#miitbeian').show();
       }
     });
   </script>
