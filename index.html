@@ -119,11 +119,11 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
     $.ajax({
-      url: 'http://ip-api.com/json?fields=40962',
+      url: 'https://ipwho.is',
       jsonp: 'callback',
       dataType: 'jsonp',
       success: function (data) {
-        if (data.countryCode!= null && data.countryCode !== 'CN') $('#miitbeian').hide();
+        if (data.country!= null && data.country !== 'CN') $('#miitbeian').hide();
       }
     });
   </script>
