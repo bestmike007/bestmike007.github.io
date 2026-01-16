@@ -119,9 +119,8 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
     $.ajax({
-      url: 'https://ipwho.is',
-      jsonp: 'callback',
-      dataType: 'jsonp',
+      url: 'https://ipapi.co/json',
+      dataType: 'json',
       success: function (data) {
         if (data.country!= null && data.country !== 'CN') $('#miitbeian').hide();
       }
